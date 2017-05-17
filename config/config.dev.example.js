@@ -1,5 +1,5 @@
 // FILL IN WITH KEYS
-
+// OK
 module.exports = {
   WATSON_TONE_API_KEY: {
     username: 'WATSON_TONE_USERNAME',

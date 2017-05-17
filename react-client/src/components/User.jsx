@@ -63,10 +63,18 @@ class User extends React.Component {
               Logout!
             </div>
           )}
-          {renderif(this.state.loggedIn)(<PastSearches search={this.props.search} prev={this.props.prev} upDown={this.props.upDown} runUpDown={this.props.runUpDown} pastSearch={this.pastSearch}/>)}
+          {renderif(this.state.loggedIn)(<PastSearches
+            search={this.props.search}
+            prev={this.props.prev} upDown={this.props.upDown}
+            runUpDown={this.props.runUpDown}
+            pastSearch={this.pastSearch}
+          />)}
         </div>
         <div>
-          <br/> {renderif(this.props.showPrev)(<PastSearchResults results={this.state.pastSearchResults} loading={this.state.loading} loadPastSearchResults={this.props.loadPastSearchResults}/>)}
+          <br /> {renderif(this.props.showPrev)(<PastSearchResults
+            results={this.state.pastSearchResults} loading={this.state.loading}
+            loadPastSearchResults={this.props.loadPastSearchResults}
+          />)}
         </div>
       </div>
     );

@@ -10,4 +10,5 @@ module.exports = {
   MM_API_KEY: '8eb4c16f2dcd84d969410e73a1830553',
   DATABASE_URL: 'mongodb://localhost/mood2d5',
   Facebook_key: '805458836269052',
+  FB_PASS: '***FBDefault***',
 };

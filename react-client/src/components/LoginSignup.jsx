@@ -1,8 +1,18 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import Header from './Header.jsx';
-import { Redirect, Link } from 'react-router-dom';
 import axios from 'axios';
+import { Redirect, Link } from 'react-router-dom';
+
+import Header from './Header';
+
+const config = require('../../../config/index.js');
+const Facebook_key = config.Facebook_key;
+
+const testAPI = () => {
+  FB.api('/me', (response) => {
+    console.log('Successful login: ', response.name);
+  });
+};
+
 
 class LoginSignup extends React.Component {
   constructor(props) {
@@ -13,15 +23,43 @@ class LoginSignup extends React.Component {
       usernameS: '',
       passwordS: '',
       redirect: false,
+      directSignup: false,
       userError: '',
       signError: ''
     };
+    this.loginFB = this.loginFB.bind(this);
+    this.handleLogin = this.handleLogin.bind(this);
+    this.statusChangeCallback = this.statusChangeCallback.bind(this);
+    this.usernameChangeL = this.usernameChangeL.bind(this);
+    this.passwordChangeL = this.passwordChangeL.bind(this);
+  }
+
+
+  componentDidMount() {
+    window.fbAsyncInit = () => {
+      FB.init({
+        appId: Facebook_key,
+        cookie: true,
+        xfbml: true,
+        version: 'v2.1',
+      });
+      FB.getLoginStatus((response) => {
+        this.statusChangeCallback(response);
+      });
+    };
+
+    (function (d, s, id) {
+      let js,
+        fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = '//connect.facebook.net/en_US/sdk.js';
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
   }
 
   usernameChangeL(e) { this.setState({ usernameL: e.target.value }); }
   passwordChangeL(e) { this.setState({ passwordL: e.target.value }); }
-  usernameChangeS(e) { this.setState({ usernameS: e.target.value }); }
-  passwordChangeS(e) { this.setState({ passwordS: e.target.value }); }
 
   login(username, password) {
     const loginInfo = { username, password };
@@ -31,22 +69,52 @@ class LoginSignup extends React.Component {
         this.setState({ redirect: true });
         console.log('Login successful!');
       } else if (res.data.errorMessage) {
-        this.setState({ userError: res.data.errorMessage });
+        this.setState({
+          // userError: res.data.errorMessage,
+          directSignup: true,
+        });
       }
     });
   }
 
-  signup(username, password) {
-    const signupInfo = { username, password };
-    axios.post('/signup', signupInfo)
-    .then((res) => {
-      if (!res.data.errorMessage) {
-        this.setState ({ redirect: true });
-        console.log('Welcome!');
-      } else if (res.data.errorMessage) {
-        this.setState({ signError: res.data.errorMessage });
+  statusChangeCallback(response) {
+    console.log('this.statusChangeCallback');
+    console.log(response);
+    if (response.status === 'connected') {
+      testAPI();
+    } else if (response.status === 'not_authorized') {
+      console.log('Please log ' +
+        'into this app.');
+    } else {
+      console.log('Please log ' +
+      'into Facebook.');
+    }
+  }
+
+  loginFB() {
+    FB.login((response) => {
+      if (response.authResponse) {
+        FB.api('/me', (response) => {
+          console.log(`FB Login, username: ${response.name}.`);
+          const user = {};
+          user.username = response.name;
+          user.password = response.id;
+          axios.post('/login', user)
+          .then((res) => {
+            if (!res.data.errorMessage) {
+              axios.post('/signup', user)
+              .then(this.setState({ redirect: true }))
+            }
+          })
+        });
+      } else {
+        console.log('User cancelled');
+        this.setState({ redirect: true })
       }
-    });
+      FB.getLoginStatus(() => {
+        this.statusChangeCallback(response);
+      });
+    }, { auth_type: 'reauthenticate' });
   }
 
   handleLogin(e) {
@@ -62,8 +130,16 @@ class LoginSignup extends React.Component {
 
   render() {
     const isRedirect = this.state.redirect;
+    const isDirectSignup = this.state.directSignup;
+
     if (isRedirect) {
       return <Redirect push to="/" />;
+    }
+    // else if (!isRedirect) {
+    //   return <Redirect push to="/loginSignup" />;
+    // }
+    if (isDirectSignup) {
+      return <Redirect push to="/signup" />;
     }
     return (
       <div>
@@ -75,10 +151,9 @@ class LoginSignup extends React.Component {
             <input
               type="text"
               className="inputText"
-              name="usernameL"
-              value={this.state.usernameL}
+              name="usernameL" value={this.state.usernameL}
               placeholder="username"
-              onChange={this.usernameChangeL.bind(this)}
+              onChange={this.usernameChangeL}
             />
             <br />
             <input
@@ -87,47 +162,15 @@ class LoginSignup extends React.Component {
               name="passwordL"
               value={this.state.passwordL}
               placeholder="password"
-              onChange={this.passwordChangeL.bind(this)}
+              onChange={this.passwordChangeL}
             />
             <br />
             <button
-              onClick={this.handleLogin.bind(this)}
+              onClick={this.handleLogin}
               className="loginButton"
             > Login </button>
             <br />
-            {this.state.userError.length > 0 ?
-              <div className="errorMessage">{this.state.userError}</div>
-          : null}
-          </div>
-          <div className="signupForm">
-        Need to sign up?
-        <br />
-            <input
-              type="text"
-              className="inputText"
-              name="usernameS"
-              value={this.state.usernameS}
-              placeholder="username"
-              onChange={this.usernameChangeS.bind(this)}
-            />
-            <br />
-            <input
-              type="password"
-              className="inputText"
-              name="passwordS"
-              value={this.state.passwordS}
-              placeholder="password"
-              onChange={this.passwordChangeS.bind(this)}
-            />
-            <br />
-            <button
-              onClick={this.handleSignup.bind(this)}
-              className="loginButton"
-            > Signup </button>
-            <br />
-            {this.state.signError.length > 0 ?
-              <div className="errorMessage">{this.state.signError}</div>
-          : null}
+            <button onClick={this.loginFB} className="loginButton">Facebook Login</button>
           </div>
         </div></div>
     );

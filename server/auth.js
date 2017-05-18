@@ -7,7 +7,7 @@ const userExists = (username, password) => {
     let hashedPassword = hash.createHash(password);
     db.User
     .find({
-      username: username,
+      username,
       password: hashedPassword
     })
     .exec((err, user) => {
@@ -24,7 +24,7 @@ const verifyUser = (req, res, next) => {
   return userExists(username, password)
   .then((item) => {
     if (!item) {
-      res.send({errorMessage: 'user not found'});
+      res.send({ errorMessage: 'user not found' });
     } else {
       next();
     }

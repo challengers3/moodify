@@ -18,6 +18,8 @@ class User extends React.Component {
     this.logout = this.logout.bind(this);
     this.redirect = this.redirect.bind(this);
     this.pastSearch = this.pastSearch.bind(this);
+    this.statusChangeCallback = this.statusChangeCallback.bind(this);
+    this.loginFB = this.loginFB.bind(this);
   }
 
 
@@ -46,6 +48,43 @@ class User extends React.Component {
       this.setState({ pastSearchResults: res.data, loading: false });
     }).catch((err) => {
       console.log(err);
+    });
+  }
+
+  statusChangeCallback (response) {
+    console.log('statusChangeCallback');
+    console.log(response);
+    if (response.status === 'connected') {
+      testAPI();
+    } else if (response.status === 'not_authorized') {
+      console.log('Please log ' +
+        'into this app.');
+    } else {
+      console.log('Please log ' +
+      'into Facebook.');
+    }
+  }
+
+  loginFB() {
+    FB.login((response) => {
+      if (response.authResponse) {
+        FB.api('/me', (response) => {
+          console.log(`FB Login, username: ${response.name}.`);
+          const user = {};
+          user.username = response.name;
+          user.password = '*FBDefault*';
+          axios.post('/login', user)
+          .then((res) => {
+            if (!res.data.errorMessage) {
+              this.setState({ loggedIn: true })
+            }
+            axios.post('/signup', user)
+            .then(this.setState({ loggedIn: true }))
+          })
+        });
+      } else {
+        console.log('User cancelled');
+      }
     });
   }
 

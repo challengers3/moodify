@@ -131,6 +131,7 @@ class LoginSignup extends React.Component {
   render() {
     const isRedirect = this.state.redirect;
     const isDirectSignup = this.state.directSignup;
+
     if (isRedirect) {
       return <Redirect push to="/" />;
     }

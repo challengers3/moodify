@@ -157,6 +157,7 @@ class App extends React.Component {
             {this.state.showPlayer
               ? <Lyrics showPlayer={this.state.showPlayer} spotifyURI={this.state.spotifyURI} loading={this.state.spotifyLoading} lyrics={this.state.currentLyrics} loading={this.state.lyricsLoading} songNameAndArtist={this.state.currentSongNameAndArtist}/>
               : null}
+              
           </div>
           <div className="col2">
             <User showPrev={this.state.showResultsUser} prev={this.showResultsUser} upDown={this.state.upDownUser} runUpDown={this.upDownUser} process={this.process} searchResultsLoading={this.state.searchResultsLoadingUser} loadPastSearchResults={this.loadPastSearchResults}/> {this.state.showMood

@@ -1,8 +1,8 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import LoginSignup from './LoginSignup.jsx';
-import App from './App.jsx';
 import { Switch, Route, Link } from 'react-router-dom';
+import LoginSignup from './LoginSignup';
+import App from './App';
+import Signup from './Signup';
 
 class Router extends React.Component {
   constructor(props) {
@@ -11,15 +11,18 @@ class Router extends React.Component {
     };
   }
 
-  render () {
+  render() {
     return (
       <div>
-       <Switch>
-          <Route exact path='/' >
+        <Switch>
+          <Route exact path="/" >
             <App />
           </Route>
-          <Route path='/loginSignup'>
+          <Route path="/loginSignup">
             <LoginSignup />
+          </Route>
+          <Route path="/signup">
+            <Signup />
           </Route>
         </Switch>
       </div>

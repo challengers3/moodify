@@ -5,12 +5,6 @@ import PastSearches from './PastSearches.jsx';
 import PastSearchResults from './PastSearchResults.jsx';
 import { Redirect, Link } from 'react-router-dom';
 
-const testAPI = () => {
-  FB.api('/me', (response) => {
-    console.log('Successful login: ', response.name);
-  });
-};
-
 class User extends React.Component {
   constructor(props) {
     super(props);
@@ -34,32 +28,11 @@ class User extends React.Component {
       if (res.data.statusCode === 200) {
         this.setState({ loggedIn: true });
       }
-    }).then(() => {
-      window.fbAsyncInit = () => {
-        FB.init({
-          appId: '805458836269052',
-          cookie: true,
-          xfbml: true,
-          version: 'v2.1',
-        });
-        FB.getLoginStatus((response) => {
-          this.statusChangeCallback(response);
-        });
-      };
-
-      (function (d, s, id) {
-        let js,
-          fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s); js.id = id;
-        js.src = '//connect.facebook.net/en_US/sdk.js';
-        fjs.parentNode.insertBefore(js, fjs);
-      }(document, 'script', 'facebook-jssdk'));
-    });
+    })
   }
 
   logout() {
-    FB.logout();
+    FB.logout(console.log('FB logout'));
     axios.get('/logout').then((res) => {
       this.setState({ loggedIn: false, pastSearchResults: [] });
     });
@@ -118,7 +91,6 @@ class User extends React.Component {
   render() {
     const isRedirect = this.state.redirect;
     const isLogin = this.state.loggedIn;
-    const isloginFB = this.state.loginFB;
     if (isRedirect) {
       return <Redirect push to="/loginSignup" />;
     }
@@ -133,13 +105,13 @@ class User extends React.Component {
               <button className="loginButton" onClick={this.redirect}>
                 Login/Signup!
               </button>
-              <button onClick={this.loginFB} className="loginButton">Facebook Login</button>
+              {/* <button onClick={this.loginFB} className="loginButton">Facebook Login</button> */}
             </div>,
           )}
           {renderif(isLogin)(
             <button className="loginButton" onClick={this.logout}>
               Logout!
-            </button>
+            </button>,
           )}
           {renderif(isLogin)(<PastSearches
             search={this.props.search}

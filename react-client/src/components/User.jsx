@@ -3,7 +3,13 @@ import renderif from 'render-if';
 import axios from 'axios';
 import PastSearches from './PastSearches.jsx';
 import PastSearchResults from './PastSearchResults.jsx';
-import {Redirect, Link} from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
+
+const testAPI = () => {
+  FB.api('/me', (response) => {
+    console.log('Successful login: ', response.name);
+  });
+};
 
 class User extends React.Component {
   constructor(props) {
@@ -12,58 +18,130 @@ class User extends React.Component {
       redirect: false,
       loggedIn: false,
       pastSearchResults: [],
-      loading: false
+      loading: false,
+      loginFB: false,
     };
     this.logout = this.logout.bind(this);
     this.redirect = this.redirect.bind(this);
     this.pastSearch = this.pastSearch.bind(this);
+    this.statusChangeCallback = this.statusChangeCallback.bind(this);
+    this.loginFB = this.loginFB.bind(this);
   }
 
-  redirect() {
-    this.setState({redirect: true});
+
+  componentDidMount() {
+    axios.get('/check').then((res) => {
+      if (res.data.statusCode === 200) {
+        this.setState({ loggedIn: true });
+      }
+    }).then(() => {
+      window.fbAsyncInit = () => {
+        FB.init({
+          appId: '805458836269052',
+          cookie: true,
+          xfbml: true,
+          version: 'v2.1',
+        });
+        FB.getLoginStatus((response) => {
+          this.statusChangeCallback(response);
+        });
+      };
+
+      (function (d, s, id) {
+        let js,
+          fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = '//connect.facebook.net/en_US/sdk.js';
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+    });
   }
 
   logout() {
-    axios.get('/logout').then(res => {
-      this.setState({loggedIn: false, pastSearchResults: []});
+    FB.logout();
+    axios.get('/logout').then((res) => {
+      this.setState({ loggedIn: false, pastSearchResults: [] });
     });
   }
 
-  componentDidMount() {
-    axios.get('/check').then(res => {
-      if (res.data.statusCode === 200) {
-        this.setState({loggedIn: true});
-      }
-    });
+  redirect() {
+    this.setState({ redirect: true });
   }
 
   pastSearch() {
-    this.setState({loading: true});
-    axios.get('/pastSearches').then(res => {
-      this.setState({pastSearchResults: res.data, loading: false});
-    }).catch(err => {
+    this.setState({ loading: true });
+    axios.get('/pastSearches').then((res) => {
+      this.setState({ pastSearchResults: res.data, loading: false });
+    }).catch((err) => {
       console.log(err);
     });
   }
 
-  render() {
-    if (this.state.redirect) {
-      return <Redirect push to="/loginSignup"/>;
+  statusChangeCallback (response) {
+    console.log('statusChangeCallback');
+    console.log(response);
+    if (response.status === 'connected') {
+      testAPI();
+    } else if (response.status === 'not_authorized') {
+      console.log('Please log ' +
+        'into this app.');
+    } else {
+      console.log('Please log ' +
+      'into Facebook.');
     }
+  }
+
+  loginFB() {
+    FB.login((response) => {
+      if (response.authResponse) {
+        FB.api('/me', (response) => {
+          console.log(`FB Login, username: ${response.name}.`);
+          const user = {};
+          user.username = response.name;
+          user.password = '*FBDefault*';
+          axios.post('/login', user)
+          .then((res) => {
+            if (!res.data.errorMessage) {
+              this.setState({ loggedIn: true })
+            }
+            axios.post('/signup', user)
+            .then(this.setState({ loggedIn: true }))
+          })
+        });
+      } else {
+        console.log('User cancelled');
+      }
+    });
+  }
+
+  render() {
+    const isRedirect = this.state.redirect;
+    const isLogin = this.state.loggedIn;
+    const isloginFB = this.state.loginFB;
+    if (isRedirect) {
+      return <Redirect push to="/loginSignup" />;
+    }
+    // else if (isloginFB) {
+    //   return <Redirect push to="/" />;
+    // }
     return (
       <div className="allUser">
         <div className="user">
-          {renderif(!this.state.loggedIn)(
-            <div className="loginButton" onClick={this.redirect}>
-              Login/Signup!
-            </div>
+          {renderif(!isLogin)(
+            <div>
+              <button className="loginButton" onClick={this.redirect}>
+                Login/Signup!
+              </button>
+              <button onClick={this.loginFB} className="loginButton">Facebook Login</button>
+            </div>,
           )}
-          {renderif(this.state.loggedIn)(
-            <div className="loginButton" onClick={this.logout}>
+          {renderif(isLogin)(
+            <button className="loginButton" onClick={this.logout}>
               Logout!
-            </div>
+            </button>
           )}
-          {renderif(this.state.loggedIn)(<PastSearches
+          {renderif(isLogin)(<PastSearches
             search={this.props.search}
             prev={this.props.prev} upDown={this.props.upDown}
             runUpDown={this.props.runUpDown}
@@ -72,7 +150,8 @@ class User extends React.Component {
         </div>
         <div>
           <br /> {renderif(this.props.showPrev)(<PastSearchResults
-            results={this.state.pastSearchResults} loading={this.state.loading}
+            results={this.state.pastSearchResults}
+            loading={this.state.loading}
             loadPastSearchResults={this.props.loadPastSearchResults}
           />)}
         </div>

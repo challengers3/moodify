@@ -1,4 +1,8 @@
 import React from 'react';
+import CircularProgress from 'material-ui/CircularProgress';
+import styles from '../../dist/css/styles';
+import {List, ListItem} from 'material-ui/List';
+import Paper from 'material-ui/Paper';
 
 class SearchResults extends React.Component {
   constructor(props) {
@@ -16,9 +20,7 @@ class SearchResults extends React.Component {
   render() {
     if (this.props.searchResultsLoading) {
       return (
-        <div className="loading">
-          <img alt="loading" src="./img/triangle.svg"/>
-        </div>
+          <CircularProgress style={styles.loading} />
       );
     } else if (this.props.results.errorMessage) {
       return (
@@ -26,10 +28,14 @@ class SearchResults extends React.Component {
       );
     } else {
       return (
-        <div className="resultsBox">
-          {this.props.results.track_list.map((trackObj, i) => (
-            <div className='searchText' key={i} value={i} onClick={this.handleClick} > {i + 1}. {trackObj.track.track_name} - {trackObj.track.artist_name}</div>
-          ))}
+        <div style={styles.list}>
+           <Paper zDepth={1} >
+              <List>
+                {this.props.results.track_list.map((trackObj, i) => (
+                  <ListItem key={i}><div value={i} onClick={this.handleClick} >{trackObj.track.track_name} - {trackObj.track.artist_name}</div></ListItem>
+                ))}
+              </List>
+            </Paper>
         </div>
       );
     }

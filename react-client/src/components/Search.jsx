@@ -1,4 +1,7 @@
 import React from 'react';
+import TextField from 'material-ui/TextField';
+import styles from '../../dist/css/styles';
+import FlatButton from 'material-ui/FlatButton';
 
 class Search extends React.Component {
   constructor(props) {
@@ -31,24 +34,12 @@ class Search extends React.Component {
 
   render() {
     return (
-      <div>
-      <div className="search">
-        <form onSubmit={this.handleSubmit}>
-          <input type="text" name="title" value={this.state.title} placeholder="title" onChange={this.handleTitleChange} className="textbox"/>
-          <input type="text" name="artist" value={this.state.artist} placeholder="artist" onChange={this.handleArtistChange} className="textbox"/>
-          <input type="submit" value="Search" className="submitbutton"/>
-          </form>
-          <form>
-          {this.props.showPrev ?
-            <div className="resultsBar" onClick={this.prevResults} >
-            <div className="searchHeadline">Search Results</div>
-            {this.props.upDown ?
-            <img className="searchPrevUp" src="./img/ic_down.svg" width="18" height="18"/>
-            : <img className="searchPrevDown" src="./img/ic_up.svg" width="18" height="18"/>}
-            </div>
-            : null}
+      <div style={styles.search}>
+        <form onSubmit={this.handleSubmit}> 
+          <TextField hintText='Title' value={this.state.title} onChange={this.handleTitleChange}/>
+          <TextField hintText='Artist' value={this.state.artist} onChange={this.handleArtistChange}/>
+          <FlatButton type='submit' label="Search" onTouchTap={this.handleSubmit}/>
         </form>
-        </div>
       </div>
     );
   }

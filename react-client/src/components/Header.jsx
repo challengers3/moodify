@@ -1,5 +1,7 @@
 import React from 'react';
 import {Redirect, Link} from 'react-router-dom';
+import AppBar from 'material-ui/AppBar';
+import FlatButton from 'material-ui/FlatButton';
 
 class Header extends React.Component {
   constructor(props) {
@@ -20,12 +22,12 @@ class Header extends React.Component {
       return <Redirect push to="/"/>;
     }
     return (
-      <div id="header" onClick={this.redirect}>
-        <h3 id="logo">mood2d5</h3>
-        <img id="mascot" src="./img/cow.png" width="75" height="75"/>
-      </div>
+      <AppBar 
+        title='moo2d5'
+        iconElementLeft={<img src="./img/cow.png" width="50" height="50"/>}
+        iconElementRight={<FlatButton label="Login / Sign up" />}
+      />
     );
   }
 }
-
 export default Header;

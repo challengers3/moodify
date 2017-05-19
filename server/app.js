@@ -78,16 +78,13 @@ app.post('/process', (req, res) => {
   return mmHelpers.getLyricsByTrackId(input.track_id)
   .then(data => {
     const lyrics = data.lyrics.lyrics_body;
-    console.log("PROMISE 1", data);
     input.lyrics = lyrics.slice(0, (lyrics.indexOf('*******')));
     return;
   })
   .then(() => {
-        console.log("PROMISE 2");
     return watsonHelpers.queryWatsonToneHelper(input.lyrics)
   })
   .then(data => {
-        console.log("PROMISE 3", data);
     watsonData = {
       track_id: input.track_id,
       anger: data.anger,
@@ -118,7 +115,8 @@ app.post('/process', (req, res) => {
     return spotifyHelpers.getSongByTitleAndArtist(input.track_name, input.artist_name)
   })
   .then((spotifyData) => {
-    input.spotify_uri = spotifyData.uri
+    input.spotify_uri = spotifyData.uri;
+    input.spotify_albumArt = spotifyData.albumArt;
 
     const songEntry = new db.Song(input);
     songEntry.save(err => {
@@ -126,7 +124,7 @@ app.post('/process', (req, res) => {
     })
   })
   .then(() => {
-    res.json([songNameAndArtist, input.lyrics, watsonData, input.spotify_uri]);
+    res.json([songNameAndArtist, input.lyrics, watsonData, input.spotify_uri, input.spotify_albumArt]);
   })
   .catch((error) => {
     console.log('/PROCESS ERROR: ', error);

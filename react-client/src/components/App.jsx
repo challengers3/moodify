@@ -13,6 +13,13 @@ import SearchResults from './SearchResults.jsx';
 import User from './User.jsx';
 import LoginSignup from './LoginSignup.jsx';
 import PastSearchResults from './PastSearchResults.jsx';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import styles from '../../dist/css/styles';
+
+// Needed for onTouchTap
+// http://stackoverflow.com/a/34015469/988941
+injectTapEventPlugin();
 
 class App extends React.Component {
   constructor(props) {
@@ -22,6 +29,7 @@ class App extends React.Component {
       currentLyrics: '',
       watson: {},
       spotifyURI: null,
+      spotifyAlbumArt: null,
       searchResults: [],
       searchResultsUser: [],
       searchResultsLoading: false,
@@ -92,6 +100,7 @@ class App extends React.Component {
         currentLyrics: data[1],
         watson: data[2],
         spotifyURI: data[3],
+        spotifyAlbumArt: data[4],
         spotifyLoading: false,
         lyricsLoading: false,
         showLyrics: true,
@@ -147,18 +156,20 @@ class App extends React.Component {
 
   render() {
     return (
+      <MuiThemeProvider>
       <div>
         <Header url={this.state.url}/>
-        <div className="container">
-          <div className="col1">
+        <div className="container" style={{ position: 'absolute', width:'100%' }}>
+          
+
             <Search search={this.search} prev={this.showResults} showPrev={this.state.showPrev} upDown={this.state.upDown} runUpDown={this.upDown}/> {this.state.showResults
               ? <SearchResults results={this.state.searchResults} process={this.process} searchResultsLoading={this.state.searchResultsLoading}/>
               : null}
             {this.state.showPlayer
-              ? <Lyrics showPlayer={this.state.showPlayer} spotifyURI={this.state.spotifyURI} loading={this.state.spotifyLoading} lyrics={this.state.currentLyrics} loading={this.state.lyricsLoading} songNameAndArtist={this.state.currentSongNameAndArtist}/>
+              ? <Lyrics showPlayer={this.state.showPlayer} spotifyURI={this.state.spotifyURI} spotifyAlbumArt={this.state.spotifyAlbumArt} loading={this.state.spotifyLoading} lyrics={this.state.currentLyrics} loading={this.state.lyricsLoading} songNameAndArtist={this.state.currentSongNameAndArtist}/>
               : null}
               
-          </div>
+
           <div className="col2">
             <User showPrev={this.state.showResultsUser} prev={this.showResultsUser} upDown={this.state.upDownUser} runUpDown={this.upDownUser} process={this.process} searchResultsLoading={this.state.searchResultsLoadingUser} loadPastSearchResults={this.loadPastSearchResults}/> {this.state.showMood
               ? <Mood watson={this.state.watson} songNameAndArtist={this.state.currentSongNameAndArtist}/>
@@ -166,6 +177,7 @@ class App extends React.Component {
           </div>
         </div>
       </div>
+      </MuiThemeProvider>
     );
   }
 }

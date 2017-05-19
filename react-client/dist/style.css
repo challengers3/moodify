@@ -301,6 +301,9 @@ h6 {
   text-transform: capitalize;
 }
 
+img {
+  max-width: 50px;
+}
 
 .forms {
   width: 500;

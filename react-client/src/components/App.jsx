@@ -157,26 +157,22 @@ class App extends React.Component {
   render() {
     return (
       <MuiThemeProvider>
-      <div>
-        <Header url={this.state.url}/>
-        <div className="container" style={{ position: 'absolute', width:'100%' }}>
-          
-
-            <Search search={this.search} prev={this.showResults} showPrev={this.state.showPrev} upDown={this.state.upDown} runUpDown={this.upDown}/> {this.state.showResults
-              ? <SearchResults results={this.state.searchResults} process={this.process} searchResultsLoading={this.state.searchResultsLoading}/>
-              : null}
-            {this.state.showPlayer
-              ? <Lyrics showPlayer={this.state.showPlayer} spotifyURI={this.state.spotifyURI} spotifyAlbumArt={this.state.spotifyAlbumArt} loading={this.state.spotifyLoading} lyrics={this.state.currentLyrics} loading={this.state.lyricsLoading} songNameAndArtist={this.state.currentSongNameAndArtist}/>
-              : null}
-              
-
-          <div className="col2">
-            <User showPrev={this.state.showResultsUser} prev={this.showResultsUser} upDown={this.state.upDownUser} runUpDown={this.upDownUser} process={this.process} searchResultsLoading={this.state.searchResultsLoadingUser} loadPastSearchResults={this.loadPastSearchResults}/> {this.state.showMood
-              ? <Mood watson={this.state.watson} songNameAndArtist={this.state.currentSongNameAndArtist}/>
-              : null}
+        <div>
+          <Header url={this.state.url}/>
+          <div style={styles.container}>
+              <Search search={this.search} prev={this.showResults} showPrev={this.state.showPrev} upDown={this.state.upDown} runUpDown={this.upDown}/> {this.state.showResults
+                ? <SearchResults results={this.state.searchResults} process={this.process} searchResultsLoading={this.state.searchResultsLoading}/>
+                : null}
+              {this.state.showPlayer
+                ? <Lyrics showPlayer={this.state.showPlayer} spotifyURI={this.state.spotifyURI} spotifyAlbumArt={this.state.spotifyAlbumArt} loading={this.state.spotifyLoading} lyrics={this.state.currentLyrics} loading={this.state.lyricsLoading} songNameAndArtist={this.state.currentSongNameAndArtist}/>
+                : null}
+            <div style={styles.cardStyle}>
+              <User showPrev={this.state.showResultsUser} prev={this.showResultsUser} upDown={this.state.upDownUser} runUpDown={this.upDownUser} process={this.process} searchResultsLoading={this.state.searchResultsLoadingUser} loadPastSearchResults={this.loadPastSearchResults}/> {this.state.showMood
+                ? <Mood watson={this.state.watson} songNameAndArtist={this.state.currentSongNameAndArtist}/>
+                : null}
+            </div>
           </div>
         </div>
-      </div>
       </MuiThemeProvider>
     );
   }

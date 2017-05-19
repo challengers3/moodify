@@ -25,7 +25,7 @@ class Header extends React.Component {
       <AppBar 
         title='moo2d5'
         iconElementLeft={<img src="./img/cow.png" width="50" height="50"/>}
-        iconElementRight={<FlatButton label="Login / Sign up" />}
+        iconElementRight={<FlatButton label="Login / Sign up" onTouchTap={this.redirect}/>}
       />
     );
   }

@@ -9,7 +9,6 @@ class Mood extends React.Component {
       emotionData: {
         labels: ["Anger", "Joy", "Disgust", "Sadness", "Fear"],
         datasets: [{
-            label: props.songNameAndArtist[0] + ' - ' + props.songNameAndArtist[1],
             data: [
               props.watson.anger,
               props.watson.joy,
@@ -37,14 +36,12 @@ class Mood extends React.Component {
       emotionOptions: {
         title: {
           display: false,
-          text: 'Kanye West - Famous',
           fontSize: 24
         },
       },
       languageData: {
         labels: ["Analytical", "Confident", "Tentative"],
         datasets: [{
-            label: props.songNameAndArtist[0] + ' - ' + props.songNameAndArtist[1],
             data: [props.watson.analytical, props.watson.confident, props.watson.tentative],
             backgroundColor: [
                 'rgba(252, 61, 57, 1)',
@@ -62,14 +59,12 @@ class Mood extends React.Component {
       languageOptions: {
         title: {
           display: false,
-          text: props.songNameAndArtist[0] + ' - ' + props.songNameAndArtist[1],
           fontSize: 24
         }
       },
       socialData: {
         labels: ["Openness", "Conscientiousness", "Extraversion", "Agreeableness", "Emotional Range"],
         datasets: [{
-            label: props.songNameAndArtist[0] + ' - ' + props.songNameAndArtist[1],
             data: [
               props.watson.openness,
               props.watson.conscientiousness,
@@ -97,7 +92,6 @@ class Mood extends React.Component {
       socialOptions: {
         title: {
           display: false,
-          text: props.songNameAndArtist[0] + ' - ' + props.songNameAndArtist[1],
           fontSize: 24
         }
       },
@@ -108,7 +102,6 @@ componentWillReceiveProps(props) {
       emotionData: {
         labels: ["Anger", "Joy", "Disgust", "Sadness", "Fear"],
         datasets: [{
-            label: props.songNameAndArtist[0] + ' - ' + props.songNameAndArtist[1],
             data: [
               props.watson.anger,
               props.watson.joy,
@@ -136,14 +129,11 @@ componentWillReceiveProps(props) {
       emotionOptions: {
         title: {
           display: false,
-          text: props.songNameAndArtist[0] + ' - ' + props.songNameAndArtist[1],
           fontSize: 24
         },
       },
       languageData: {
-        labels: ["Analytical", "Confident", "Tentative"],
         datasets: [{
-            label: props.songNameAndArtist[0] + ' - ' + props.songNameAndArtist[1],
             data: [props.watson.analytical, props.watson.confident, props.watson.tentative],
             backgroundColor: [
                 'rgba(252, 61, 57, 1)',
@@ -161,14 +151,12 @@ componentWillReceiveProps(props) {
       languageOptions: {
         title: {
           display: false,
-          text: props.songNameAndArtist[0] + ' - ' + props.songNameAndArtist[1],
           fontSize: 24
         }
       },
       socialData: {
         labels: ["Openness", "Conscientiousness", "Extraversion", "Agreeableness", "Emotional Range"],
         datasets: [{
-            label: props.songNameAndArtist[0] + ' - ' + props.songNameAndArtist[1],
             data: [
               props.watson.openness,
               props.watson.conscientiousness,
@@ -196,7 +184,6 @@ componentWillReceiveProps(props) {
       socialOptions: {
         title: {
           display: false,
-          text: props.songNameAndArtist[0] + ' - ' + props.songNameAndArtist[1],
           fontSize: 24
         }
       }
@@ -204,17 +191,25 @@ componentWillReceiveProps(props) {
 }
   render() {
     return (
-      <div className="maingraph">
-      <h2>Emotion</h2>
-      <Bar data={this.state.emotionData} options={this.state.emotionOptions} width={500}/>
-      <div className="maingraph">
-      <h5>Social</h5>
-      <Polar data={this.state.socialData} options={this.state.socialData} width={500}/>
-      </div>
-      <div className="maingraph">
-      <h5>Language</h5>
-      <Doughnut data={this.state.languageData} options={this.state.languageOptions} width={500}/>
-      </div>
+      <div>
+      
+        <div className="emotion">
+          <h5>Emotion</h5>
+          <Doughnut data={this.state.emotionData} options={this.state.emotionOptions}width={600}/>
+        </div>
+
+        <div className="social">
+          <h5>Social</h5>
+          <Doughnut data={this.state.socialData} options={this.state.socialOptions} width={600}/>
+        </div>
+        
+        
+      
+        <div className="language">
+          <h5>Language</h5>
+          <Doughnut data={this.state.languageData} options={this.state.languageOptions} width={600}/>
+        </div>
+
       </div>
     )
   }

@@ -2,7 +2,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
-import {Switch, Route, Link} from 'react-router-dom';
+import { Switch, Route, Link } from 'react-router-dom';
 // sub components
 import Lyrics from './Lyrics.jsx';
 import Mood from './Mood.jsx';
@@ -45,7 +45,7 @@ class App extends React.Component {
       url: window.location.href,
       loggedIn: false,
       upDownUser: false,
-      searchResultsLoadingUser: false
+      searchResultsLoadingUser: false,
     };
     this.search = this.search.bind(this);
     this.process = this.process.bind(this);
@@ -57,17 +57,17 @@ class App extends React.Component {
   }
 
   search(title, artist) {
-    this.setState({showResults: true, searchResultsLoading: true, showPrev: true, upDown: false});
+    this.setState({ showResults: true, searchResultsLoading: true, showPrev: true, upDown: false });
 
-    let options = {
-      title: title,
-      artist: artist
+    const options = {
+      title,
+      artist,
     };
     axios.post('/search', options).then((res) => {
       if (!res.data) {
         console.log('error');
       }
-      this.setState({searchResults: res.data, searchResultsLoading: false});
+      this.setState({ searchResults: res.data, searchResultsLoading: false });
     });
   }
 
@@ -81,10 +81,10 @@ class App extends React.Component {
       upDownUser: false,
       showLyrics: false,
       showMood: false,
-      upDown: true
+      upDown: true,
     });
 
-    let input = {};
+    const input = {};
     input.track_id = trackObj.track_id;
     input.track_name = trackObj.track_name;
     input.artist_name = trackObj.artist_name;
@@ -93,8 +93,8 @@ class App extends React.Component {
     input.album_coverart_500x500 = trackObj.album_coverart_500x500;
     input.album_coverart_800x800 = trackObj.album_coverart_800x800;
 
-    axios.post('/process', input).then(res => {
-      let data = res.data;
+    axios.post('/process', input).then((res) => {
+      const data = res.data;
       this.setState({
         currentSongNameAndArtist: data[0],
         currentLyrics: data[1],
@@ -104,52 +104,52 @@ class App extends React.Component {
         spotifyLoading: false,
         lyricsLoading: false,
         showLyrics: true,
-        showMood: true
+        showMood: true,
       });
-    }).catch(error => {
+    }).catch((error) => {
       throw error;
     });
   }
 
   showResults() {
     this.setState({
-      showResults: !this.state.showResults
+      showResults: !this.state.showResults,
     });
   }
 
   showResultsUser() {
     this.setState({
-      showResultsUser: !this.state.showResultsUser
+      showResultsUser: !this.state.showResultsUser,
     });
   }
 
   upDown() {
     this.setState({
-      upDown: !this.state.upDown
+      upDown: !this.state.upDown,
     });
   }
 
   upDownUser() {
     this.setState({
-      upDownUser: !this.state.upDownUser
+      upDownUser: !this.state.upDownUser,
     });
   }
 
   loadPastSearchResults(trackId) {
-    axios.post('/loadPastSearchResults', {track_id: trackId}).then(res => {
-      let songData = res.data[0];
-      let watsonData = res.data[1];
+    axios.post('/loadPastSearchResults', { track_id: trackId }).then((res) => {
+      const songData = res.data[0];
+      const watsonData = res.data[1];
       console.log(watsonData);
       this.setState({
         currentLyrics: songData.lyrics,
         currentSongNameAndArtist: [
-          songData.track_name, songData.artist_name
+          songData.track_name, songData.artist_name,
         ],
         watson: watsonData,
         spotifyURI: songData.spotify_uri,
         showMood: true,
         showPlayer: true,
-        showLyrics: true
+        showLyrics: true,
       });
     }).catch(err => console.log(err));
   }
@@ -158,18 +158,36 @@ class App extends React.Component {
     return (
       <MuiThemeProvider>
         <div>
-          <Header url={this.state.url}/>
+          <Header url={this.state.url} />
           <div style={styles.container}>
-              <Search search={this.search} prev={this.showResults} showPrev={this.state.showPrev} upDown={this.state.upDown} runUpDown={this.upDown}/> {this.state.showResults
-                ? <SearchResults results={this.state.searchResults} process={this.process} searchResultsLoading={this.state.searchResultsLoading}/>
-                : null}
-              {this.state.showPlayer
-                ? <Lyrics showPlayer={this.state.showPlayer} spotifyURI={this.state.spotifyURI} spotifyAlbumArt={this.state.spotifyAlbumArt} loading={this.state.spotifyLoading} lyrics={this.state.currentLyrics} loading={this.state.lyricsLoading} songNameAndArtist={this.state.currentSongNameAndArtist}/>
-                : null}
+            <Search search={this.search} prev={this.showResults} showPrev={this.state.showPrev} upDown={this.state.upDown} runUpDown={this.upDown} />
+            {this.state.showResults ?
+              <SearchResults 
+                results={this.state.searchResults} 
+                process={this.process} 
+                searchResultsLoading={this.state.searchResultsLoading} 
+              /> : null}
+            {this.state.showPlayer ?
+              <Lyrics 
+                showPlayer={this.state.showPlayer} 
+                spotifyURI={this.state.spotifyURI}
+                spotifyAlbumArt={this.state.spotifyAlbumArt}
+                loading={this.state.spotifyLoading}
+                lyrics={this.state.currentLyrics}
+                loading={this.state.lyricsLoading}
+                songNameAndArtist={this.state.currentSongNameAndArtist}
+                watson={this.state.watson}
+              /> : null}
             <div style={styles.cardStyle}>
-              <User showPrev={this.state.showResultsUser} prev={this.showResultsUser} upDown={this.state.upDownUser} runUpDown={this.upDownUser} process={this.process} searchResultsLoading={this.state.searchResultsLoadingUser} loadPastSearchResults={this.loadPastSearchResults}/> {this.state.showMood
-                ? <Mood watson={this.state.watson} songNameAndArtist={this.state.currentSongNameAndArtist}/>
-                : null}
+              <User 
+                showPrev={this.state.showResultsUser} 
+                prev={this.showResultsUser} 
+                upDown={this.state.upDownUser} 
+                runUpDown={this.upDownUser} 
+                process={this.process} 
+                searchResultsLoading={this.state.searchResultsLoadingUser} 
+                loadPastSearchResults={this.loadPastSearchResults} 
+              /> 
             </div>
           </div>
         </div>

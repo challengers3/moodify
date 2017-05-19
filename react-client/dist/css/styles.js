@@ -23,11 +23,9 @@ const styles = {
   dividerColor: {
     borderColor: '#BDBDBD',
   },
-  cardStyle: {
-    display: 'table',
-    maxWidth: '50%',    
-    float: 'left',
-    margin: '0 0 0 33%'
+  container: {
+    position: 'absolute', 
+    width:'100%' 
   },
   search: {
     float: 'left',
@@ -44,6 +42,12 @@ const styles = {
   list: {
     display: 'table',
     maxWidth: '33%',    
+    float: 'left',
+    margin: '0 0 0 33%'
+  },
+  cardStyle: {
+    display: 'table',
+    maxWidth: '50%',    
     float: 'left',
     margin: '0 0 0 33%'
   }

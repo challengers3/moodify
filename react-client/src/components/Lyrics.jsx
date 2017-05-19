@@ -1,5 +1,6 @@
 import React from 'react';
 import Player from './Player.jsx';
+import Mood from './Mood.jsx';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 import styles from '../../dist/css/styles';
@@ -32,11 +33,15 @@ class Lyrics extends React.Component {
             {this.props.showPlayer ?
             <Player spotifyURI={this.props.spotifyURI} loading={this.props.loading}/>
           : null }
-            {this.props.lyrics}
+            <pre>{this.props.lyrics}</pre>
+            <Mood watson={this.props.watson} 
+                  songNameAndArtist={this.props.songNameAndArtist} 
+                  />
           </CardText>
           <CardActions>
-            <FlatButton label="Action1" />
-            <FlatButton label="Action2" />
+            <FlatButton label="Emotion" />
+            <FlatButton label="Social" />
+            <FlatButton label="Language" />
           </CardActions>
         </Card>
       );

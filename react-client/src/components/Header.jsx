@@ -14,18 +14,18 @@ class Header extends React.Component {
   }
 
   redirect() {
-    this.setState({redirect: true});
+    this.setState({ redirect: true });
   }
 
   render() {
     if (this.state.redirect && this.state.url !== this.props.url) {
-      return <Redirect push to="/"/>;
+      return <Redirect push to="/" />;
     }
     return (
-      <AppBar 
+      <AppBar
         title='moo2d5'
-        iconElementLeft={<img src="./img/cow.png" width="50" height="50"/>}
-        iconElementRight={<FlatButton label="Login / Sign up" onTouchTap={this.redirect}/>}
+        iconElementLeft={<img src="./img/cow.png" width="50" height="50" />}
+        iconElementRight={<FlatButton label="Login / Sign up" onTouchTap={this.redirect} />}
       />
     );
   }

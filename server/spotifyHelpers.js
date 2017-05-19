@@ -12,7 +12,7 @@ const getSongByTitleAndArtist = (title, artist) => {
     }
     return spotifyData;
   })
-  .catch(err => { console.log(err); });
+  .catch((err) => { console.log(err); });
 };
 
 // const Client_ID = '17af2e7d17c94de6b602b7ae29b1a7c0';

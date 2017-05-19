@@ -13,7 +13,7 @@ class PastSearches extends React.Component {
   prevResults(e) {
     this.props.prev();
     this.props.runUpDown();
-    this.setState({showPrev: true});
+    this.setState({ showPrev: true });
     this.props.pastSearch();
   }
 

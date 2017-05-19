@@ -71,20 +71,18 @@ app.post('/fetchLyricsByTrackId', (req, res) => {
 });
 
 app.post('/process', (req, res) => {
-  let input = req.body;
+  const input = req.body;
   const songNameAndArtist = [input.artist_name, input.track_name];
   let watsonData = {};
 
   return mmHelpers.getLyricsByTrackId(input.track_id)
-  .then(data => {
+  .then((data) => {
     const lyrics = data.lyrics.lyrics_body;
     input.lyrics = lyrics.slice(0, (lyrics.indexOf('*******')));
     return;
   })
-  .then(() => {
-    return watsonHelpers.queryWatsonToneHelper(input.lyrics)
-  })
-  .then(data => {
+  .then(() => watsonHelpers.queryWatsonToneHelper(input.lyrics))
+  .then((data) => {
     watsonData = {
       track_id: input.track_id,
       anger: data.anger,
@@ -108,7 +106,8 @@ app.post('/process', (req, res) => {
   })
   .then(() => {
     if (req.session.username) {
-      return db.User.where({username: req.session.username}).update({ $push: {songs: input.track_id}})
+      return db.User.where({ username: req.session.username })
+      .update({ $push: { songs: input.track_id } });
     }
   })
   .then(() => {
@@ -130,19 +129,19 @@ app.post('/process', (req, res) => {
     console.log('/PROCESS ERROR: ', error);
     res.send(error);
   });
-})
+});
 
 app.get('/pastSearches', (req, res) => {
   const username = req.session.username;
-  return new Promise ((resolve, reject) => {
-    db.User.where({ username: username }).findOne((err, user) => {
+  return new Promise((resolve, reject) => {
+    db.User.where({ username }).findOne((err, user) => {
       if (err) { reject(err); }
       const songs = user.songs;
       resolve(songs);
     })
   })
-  .then(songs => {
-    if (songs.length === 0) { res.send({errorMessage: 'No Past Searches'}); }
+  .then((songs) => {
+    if (songs.length === 0) { res.send({ errorMessage: 'No Past Searches' }); }
     return new Promise ((resolve, reject) => {
       songArray = []
       songs.forEach((songId, index) => {
@@ -161,9 +160,9 @@ app.get('/pastSearches', (req, res) => {
   .then((songArray) => {
     res.send(songArray);
   })
-  .catch(err => {
-    res.send({errorMessage: 'No Past Searches'});
-  })
+  // .catch(err => {
+  //   res.send({ errorMessage: 'No Past Searches' });
+  // })
 });
 
 app.post('/loadPastSearchResults', (req, res) => {

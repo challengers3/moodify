@@ -11,4 +11,8 @@ module.exports = {
   DATABASE_URL: 'mongodb://localhost/mood2d5',
   Facebook_key: '805458836269052',
   FB_PASS: '***FBDefault***',
+  SPOTIFY_API: {
+    key: 'd0a98ea2e57645f89e064dea8fe64e1c',
+    secret: 'b6f7705181224a1db2140deb99e8d6d7',
+  }
 };

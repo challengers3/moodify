@@ -57,6 +57,7 @@ class App extends React.Component {
   }
 
   search(title, artist) {
+    console.log(title, artist)
     this.setState({ showResults: true, searchResultsLoading: true, showPrev: true, upDown: false });
 
     const options = {
@@ -67,10 +68,10 @@ class App extends React.Component {
       if (!res.data) {
         console.log('error');
       }
-      this.setState({ 
-        searchResults: res.data, 
+      this.setState({
+        searchResults: res.data,
         searchResultsLoading: false,
-        showPlayer: false, 
+        showPlayer: false,
       });
     });
   }
@@ -79,14 +80,18 @@ class App extends React.Component {
     this.setState({
       showPlayer: true,
       spotifyLoading: true,
+    }, this.setState({
       lyricsLoading: true,
       showResults: false,
+    }, this.setState({
       showResultsUser: false,
       upDownUser: false,
+    }, this.setState({
       showLyrics: false,
       showMood: false,
+    }, this.setState({
       upDown: true,
-    });
+    })))));
 
     const input = {};
     input.track_id = trackObj.track_id;
@@ -117,7 +122,7 @@ class App extends React.Component {
 
   showResults() {
     this.setState({
-      showPlayer: false, 
+      showPlayer: false,
       showResults: !this.state.showResults,
     });
   }
@@ -150,12 +155,15 @@ class App extends React.Component {
         currentSongNameAndArtist: [
           songData.track_name, songData.artist_name,
         ],
+      }, this.setState({
         watson: watsonData,
         spotifyURI: songData.spotify_uri,
+      }, this.setState({
         showMood: true,
         showPlayer: true,
+      }, this.setState({
         showLyrics: true,
-      });
+      }))));
     }).catch(err => console.log(err));
   }
 
@@ -167,13 +175,14 @@ class App extends React.Component {
           <div style={styles.container}>
             <Search search={this.search} prev={this.showResults} showPrev={this.state.showPrev} upDown={this.state.upDown} runUpDown={this.upDown} />
             {this.state.showResults ?
-              <SearchResults 
-                results={this.state.searchResults} 
-                process={this.process} 
-                searchResultsLoading={this.state.searchResultsLoading} 
+              <SearchResults
+                results={this.state.searchResults}
+                process={this.process}
+                searchResultsLoading={this.state.searchResultsLoading}
               /> : null}
             {this.state.showPlayer ?
-              <Lyrics 
+              <Lyrics
+                showPlayer={this.state.showPlayer}
                 spotifyURI={this.state.spotifyURI}
                 spotifyAlbumArt={this.state.spotifyAlbumArt}
                 loading={this.state.spotifyLoading}
@@ -183,16 +192,32 @@ class App extends React.Component {
                 watson={this.state.watson}
               /> : null}
             <div style={styles.cardStyle}>
-              <User 
-                showPrev={this.state.showResultsUser} 
-                prev={this.showResultsUser} 
-                upDown={this.state.upDownUser} 
-                runUpDown={this.upDownUser} 
-                process={this.process} 
-                searchResultsLoading={this.state.searchResultsLoadingUser} 
-                loadPastSearchResults={this.loadPastSearchResults} 
-              /> 
+              <User
+                showPrev={this.state.showResultsUser}
+                prev={this.showResultsUser}
+                upDown={this.state.upDownUser}
+                runUpDown={this.upDownUser}
+                process={this.process}
+                searchResultsLoading={this.state.searchResultsLoadingUser}
+                loadPastSearchResults={this.loadPastSearchResults}
+              />
             </div>
+              />
+              : null}
+          </div>
+          <div className="col2">
+            <User
+              showPrev={this.state.showResultsUser}
+              prev={this.showResultsUser} upDown={this.state.upDownUser}
+              runUpDown={this.upDownUser} process={this.process}
+              searchResultsLoading={this.state.searchResultsLoadingUser}
+              loadPastSearchResults={this.loadPastSearchResults}
+            /> {this.state.showMood
+              ? <Mood
+                watson={this.state.watson}
+                songNameAndArtist={this.state.currentSongNameAndArtist}
+              />
+              : null}
           </div>
         </div>
       </MuiThemeProvider>

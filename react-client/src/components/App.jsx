@@ -46,6 +46,7 @@ class App extends React.Component {
       loggedIn: false,
       upDownUser: false,
       searchResultsLoadingUser: false,
+      // now: Date.now(),
     };
     this.search = this.search.bind(this);
     this.process = this.process.bind(this);
@@ -56,6 +57,24 @@ class App extends React.Component {
     this.loadPastSearchResults = this.loadPastSearchResults.bind(this);
   }
 
+  componentDidMount() {
+    console.log('App componentDidMount'); // out of sync issue
+    // debugger;
+    if (annyang) {
+      const commands = {
+        'look up *title (by *artist)': this.search,
+        'console log': () => console.log('in annyang'),
+      };
+      annyang.addCommands(commands);
+      annyang.debug();
+    }
+  }
+
+  componentWillUnmount() {
+    annyang.removeCommands();
+  }
+
+  // this is where the issue with setstate no mount
   search(title, artist) {
     console.log(title, artist)
     this.setState({ showResults: true, searchResultsLoading: true, showPrev: true, upDown: false });

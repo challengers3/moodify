@@ -31,12 +31,11 @@ class Search extends React.Component {
     }
   }
 
-
   handleTitleChange(e) { this.setState({ title: e.target.value }); }
   handleArtistChange(e) { this.setState({ artist: e.target.value }); }
 
   handleSubmit(e) {
-    // e.preventDefault();
+    e.preventDefault();
     this.props.search(this.state.title, this.state.artist);
     this.setState({ title: '', artist: '', showPrev: true });
   }
@@ -61,7 +60,7 @@ class Search extends React.Component {
             value={this.state.artist}
             onChange={this.handleArtistChange}
           />
-          <FlatButton label="Search" onClick={this.handleSubmit} />
+          <FlatButton type="submit" label="Search" onClick={this.handleSubmit} />
         </form>
           <button
             className="submitbutton"
@@ -69,16 +68,6 @@ class Search extends React.Component {
           >
             Speech Search
           </button>
-          <form>
-            {this.props.showPrev ?
-              <div className="resultsBar" onClick={this.prevResults} >
-                <div className="searchHeadline">Search Results</div>
-                {this.props.upDown ?
-                  <img className="searchPrevUp" src="./img/ic_down.svg" width="18" height="18" />
-            : <img className="searchPrevDown" src="./img/ic_up.svg" width="18" height="18" />}
-              </div>
-            : null}
-          </form>
         </div>
     );
   }

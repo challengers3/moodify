@@ -3,6 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import { Redirect, Switch, Route, Link } from 'react-router-dom';
+import Facebook_key from '../../../config/config.dev.js'
 
 // sub components
 import Lyrics from './Lyrics';
@@ -67,6 +68,27 @@ class Main extends React.Component {
       };
       annyang.addCommands(commands);
       annyang.debug();
+
+      window.fbAsyncInit = () => {
+        FB.init({
+          appId: Facebook_key,
+          cookie: true,
+          xfbml: true,
+          version: 'v2.1',
+        });
+        FB.getLoginStatus((response) => {
+          this.statusChangeCallback(response);
+        });
+      };
+
+      (function (d, s, id) {
+        let js,
+          fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = '//connect.facebook.net/en_US/sdk.js';
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));      
     }
   }
 
@@ -81,6 +103,7 @@ class Main extends React.Component {
       searchResultsLoading: true,
       showPrev: true,
       upDown: false,
+      showPlayer: false,
     });
 
     const options = {
@@ -138,6 +161,7 @@ class Main extends React.Component {
   showResults() {
     this.setState({
       showResults: !this.state.showResults,
+      showPlayer: false
     });
   }
 

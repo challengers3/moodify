@@ -25,31 +25,31 @@ const styles = {
   },
   container: {
     position: 'absolute', 
-    width:'100%' 
+    width:'100%', 
+    textAlign: 'center'
   },
   search: {
-    float: 'left',
-    margin: '0 0 0 33%'
+    width: '50%',
+    margin: '0 auto'
   },
   loading: {
     margin: '0 auto',
     size: 160,
     thickness: 7,
     width: '100%',
-    float: 'left',
-    margin: '25% 0 0 50%'
+    margin: '25% auto'
   },
-  list: {
+  searchResults: {
     display: 'table',
-    maxWidth: '33%',    
-    float: 'left',
-    margin: '0 0 0 33%'
+    width: '55%',    
+    margin: '0 auto',
+    textAlign: 'left'
+
   },
   cardStyle: {
     display: 'table',
-    maxWidth: '50%',    
-    float: 'left',
-    margin: '0 0 0 33%'
+    width: '55%',    
+    margin: '0 auto'
   }
 };
 

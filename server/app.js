@@ -81,9 +81,10 @@ app.post('/process', (req, res) => {
     input.lyrics = lyrics.slice(0, (lyrics.indexOf('*******')));
     return;
   })
-  .then(() => watsonHelpers.queryWatsonToneHelper(input.lyrics))
+  .then(() => watsonHelpers.queryWatson(input.lyrics))
   .then((data) => {
     watsonData = {
+      lyrics: data.lyrics,
       track_id: input.track_id,
       anger: data.anger,
       disgust: data.disgust,

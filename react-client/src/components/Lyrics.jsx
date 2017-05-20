@@ -52,6 +52,11 @@ class Lyrics extends React.Component {
     }
   };
 
+  componentDidMount(){
+      this.setState({tone: 'language'});
+      this.setState({expanded: !this.state.expanded});
+  }
+
 
   render() {
     if (this.props.loading) {
@@ -76,9 +81,9 @@ class Lyrics extends React.Component {
             <Mood watson={this.props.watson} tone={this.state.tone}/>
           </CardText>
           <CardActions>
-            <FlatButton label="Emotion" onTouchTap={this.handleEmotionToggle} />
-            <FlatButton label="Social" onTouchTap={this.handleSocialToggle} />
-            <FlatButton label="Language" onTouchTap={this.handleLanguageToggle} />
+            <FlatButton label="Language Analysis" onTouchTap={this.handleLanguageToggle} />
+            <FlatButton label="Emotion Analysis" onTouchTap={this.handleEmotionToggle} />
+            <FlatButton label="Social Analysis" onTouchTap={this.handleSocialToggle} />
           </CardActions>
         </Card>
       );

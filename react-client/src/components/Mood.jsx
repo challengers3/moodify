@@ -42,7 +42,7 @@ class Mood extends React.Component {
       languageData: {
         labels: ["Analytical", "Confident", "Tentative"],
         datasets: [{
-            data: [props.watson.analytical, props.watson.confident, props.watson.tentative],
+            data: [props.watson.analytical, props.watson.confident, props.watson.tentative, ],
             backgroundColor: [
                 'rgba(252, 61, 57, 1)',
                 'rgba(254, 203, 46, 1)',
@@ -191,28 +191,31 @@ componentWillReceiveProps(props) {
   })
 }
   render() {   
-    if(this.props.tone === 'emotion') {
+    if (this.props.tone === 'language') {
+      return (
+        <div className="language">
+          <h3>Language</h3>
+          <Doughnut data={this.state.languageData} options={this.state.languageOptions} width={600}/>
+          <pre>courtesy of IBM Watson</pre>
+        </div>
+      )
+    } else if(this.props.tone === 'emotion') {
       return (
         <div className="emotion">
-          <h5>Emotion</h5>
+          <h3>Emotion</h3>
           <Doughnut data={this.state.emotionData} options={this.state.emotionOptions} width={600}/>
+          <pre>courtesy of IBM Watson</pre>
         </div>
       )
     } else if (this.props.tone === 'social') {
       return (
         <div className="social">
-          <h5>Social</h5>
+          <h3>Social</h3>
           <Doughnut data={this.state.socialData} options={this.state.socialOptions} width={600}/>
+          <pre>courtesy of IBM Watson</pre>
         </div>
       )
-    } else if (this.props.tone === 'language') {
-      return (
-        <div className="language">
-          <h5>Language</h5>
-          <Doughnut data={this.state.languageData} options={this.state.languageOptions} width={600}/>
-        </div>
-      )
-    }
+    } 
   }
 }
 

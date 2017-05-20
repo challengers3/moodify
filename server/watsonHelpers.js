@@ -1,11 +1,9 @@
 const Promise = require('bluebird');
 const request = Promise.promisifyAll(require('request'));
 const watson = Promise.promisifyAll(require('watson-developer-cloud'));
-const watsonNLU = Promise.promisifyAll(require('watson-developer-cloud/natural-language-understanding/v1.js'));
 const config = require('../config/index.js');
 
 const WATSON_TONE_API_KEY = config.WATSON_TONE_API_KEY;
-const WATSON_NLU_API_KEY = config.WATSON_NLU_API_KEY;
 
 const tone_analyzer = watson.tone_analyzer({
   url: 'https://gateway.watsonplatform.net/tone-analyzer/api',
@@ -15,7 +13,7 @@ const tone_analyzer = watson.tone_analyzer({
   version_date: '2016-05-19'
 });
 
-const queryWatsonToneHelper = (songString) => {
+const getSongData = (songString) => {
   return tone_analyzer.toneAsync({ text: songString })
   .then (data => {
 
@@ -48,43 +46,33 @@ const queryWatsonToneHelper = (songString) => {
     };
   })
   .catch(err => {
-    console.log("queryWatsonToneHelper error: ", err);
+    console.log("getSongData error: ", err);
     return err;
   });
 };
 
-const nlu = new watsonNLU({
-  username: WATSON_NLU_API_KEY.username,
-  password: WATSON_NLU_API_KEY.password,
-  version_date: '2017-02-27'
-});
+const getLyricsData = (songString) => {
+  let songByLines = songString.split('\n')
+  let params = { utterances : [] };
 
-
-const queryWatsonNLUHelper = (songString) => {
-  const parameters = {
-    text: songString,
-    features: {
-      entities: {
-        emotion: true,
-        sentiment: true,
-        limit: 2
-      },
-      keywords: {
-        emotion: true,
-        sentiment: true,
-        limit: 2
-      }
-    }
+  for (let i = 0; i < songByLines.length; i++) {
+    params.utterances.push( {text: songByLines[i]} )
   }
-  return nlu.analyzeAsync(parameters)
-  .then (data => {
-    return data;
-  })
-  .catch (err => {
-    console.log('queryWatsonNLUHelper error: ', err);
+
+  return tone_analyzer.tone_chatAsync(params)
+  .then ( data => data )
+  .catch(err => {
+    console.log("getLyricsData error: ", err);
     return err;
   });
 };
 
-module.exports.queryWatsonToneHelper = queryWatsonToneHelper;
-module.exports.queryWatsonNLUHelper = queryWatsonNLUHelper;
+const queryWatson = (songString) => {
+  return Promise.all([getSongData(songString), getLyricsData(songString)])
+  .spread((songData, lyricsData) => { 
+    songData.lyrics = lyricsData; 
+    return songData;
+  });
+};
+
+module.exports.queryWatson = queryWatson;

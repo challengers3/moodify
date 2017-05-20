@@ -134,6 +134,7 @@ componentWillReceiveProps(props) {
       },
       languageData: {
         datasets: [{
+            labels: ["Analytical", "Confident", "Tentative"],
             data: [props.watson.analytical, props.watson.confident, props.watson.tentative],
             backgroundColor: [
                 'rgba(252, 61, 57, 1)',
@@ -189,29 +190,29 @@ componentWillReceiveProps(props) {
       }
   })
 }
-  render() {
-    return (
-      <div>
-      
+  render() {   
+    if(this.props.tone === 'emotion') {
+      return (
         <div className="emotion">
           <h5>Emotion</h5>
-          <Doughnut data={this.state.emotionData} options={this.state.emotionOptions}width={600}/>
+          <Doughnut data={this.state.emotionData} options={this.state.emotionOptions} width={600}/>
         </div>
-
+      )
+    } else if (this.props.tone === 'social') {
+      return (
         <div className="social">
           <h5>Social</h5>
           <Doughnut data={this.state.socialData} options={this.state.socialOptions} width={600}/>
         </div>
-        
-        
-      
+      )
+    } else if (this.props.tone === 'language') {
+      return (
         <div className="language">
           <h5>Language</h5>
           <Doughnut data={this.state.languageData} options={this.state.languageOptions} width={600}/>
         </div>
-
-      </div>
-    )
+      )
+    }
   }
 }
 

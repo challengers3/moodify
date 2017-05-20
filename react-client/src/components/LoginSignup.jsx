@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { Redirect, Link } from 'react-router-dom';
 
-import Header from './Header';
+//import Header from './Header';
 
 const config = require('../../../config/index.js');
 const Facebook_key = config.Facebook_key;
@@ -27,6 +27,7 @@ class LoginSignup extends React.Component {
       userError: '',
       signError: ''
     };
+
     this.loginFB = this.loginFB.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
     this.statusChangeCallback = this.statusChangeCallback.bind(this);
@@ -143,7 +144,6 @@ class LoginSignup extends React.Component {
     }
     return (
       <div>
-        <Header />
         <div className="forms">
           <div className="loginForm">
         Have an account?

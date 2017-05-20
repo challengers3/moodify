@@ -28,7 +28,7 @@ class SearchResults extends React.Component {
       );
     } else {
       return (
-        <div style={styles.list}>
+        <div style={styles.searchResults}>
            <Paper zDepth={1} >
               <List>
                 {this.props.results.track_list.map((trackObj, i) => (
@@ -39,17 +39,6 @@ class SearchResults extends React.Component {
         </div>
       );
     }
-    return (
-      <div className="resultsBox">
-        {this.props.results.track_list.map((trackObj, i) => (
-          <div
-            className="searchText"
-            key={i} value={i}
-            onClick={this.handleClick}
-          > {i + 1}. {trackObj.track.track_name} - {trackObj.track.artist_name}</div>
-          ))}
-      </div>
-    );
   }
 }
 

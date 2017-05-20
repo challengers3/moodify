@@ -1,12 +1,12 @@
-const path = require('path');
+const path = require(`path`);
 
-const SRC_DIR = path.join(__dirname, '/react-client/src');
-const DIST_DIR = path.join(__dirname, '/react-client/dist');
+const SRC_DIR = path.join(__dirname, `/react-client/src`);
+const DIST_DIR = path.join(__dirname, `/react-client/dist`);
 
 module.exports = {
   entry: `${SRC_DIR}/index.jsx`,
   output: {
-    filename: 'bundle.js',
+    filename: `bundle.js`,
     path: DIST_DIR,
   },
   module: {
@@ -14,23 +14,23 @@ module.exports = {
       {
         test: /\.jsx?/,
         include: SRC_DIR,
-        loader: 'babel-loader',
+        loader: `babel-loader`,
         query: {
-          presets: ['react', 'es2015'],
+          presets: [`react`, `es2015`],
         },
       }, {
         test: /\.(jpe?g|png|gif|svg)$/i,
         use: [
           {
-            loader: 'file-loader',
+            loader: `file-loader`,
             options: {
               query: {
-                name: 'assets/[name].[ext]',
+                name: `assets/[name].[ext]`,
               },
             },
           },
           {
-            loader: 'image-webpack-loader',
+            loader: `image-webpack-loader`,
             options: {
               query: {
                 mozjpeg: {
@@ -49,6 +49,6 @@ module.exports = {
     ],
   },
   resolve: {
-    extensions: ['.js', '.jsx', '.json'],
+    extensions: [`.js`, `.jsx`, `.json`],
   },
 };

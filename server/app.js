@@ -78,14 +78,13 @@ app.post('/process', (req, res) => {
   return mmHelpers.getLyricsByTrackId(input.track_id)
   .then((data) => {
     const lyrics = data.lyrics.lyrics_body;
-    console.log('raw: ', lyrics)
     input.lyrics = lyrics.slice(0, (lyrics.indexOf('*******')));
-    console.log('sliced: ', input.lyrics)
     return;
   })
-  .then(() => watsonHelpers.queryWatsonToneHelper(input.lyrics))
+  .then(() => watsonHelpers.queryWatson(input.lyrics))
   .then((data) => {
     watsonData = {
+      lyrics: data.lyrics,
       track_id: input.track_id,
       anger: data.anger,
       disgust: data.disgust,

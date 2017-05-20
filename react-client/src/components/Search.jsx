@@ -50,7 +50,7 @@ class Search extends React.Component {
   render() {
     return (
       <div style={styles.search}>
-        {/* <form onSubmit={this.handleSubmit}> */}
+        <form onSubmit={this.handleSubmit}>
           <TextField
             hintText='Title'
             value={this.state.title}
@@ -62,7 +62,7 @@ class Search extends React.Component {
             onChange={this.handleArtistChange}
           />
           <FlatButton label="Search" onClick={this.handleSubmit} />
-        {/* </form> */}
+        </form>
           <button
             className="submitbutton"
             onClick={Search.clickVoice}

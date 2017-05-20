@@ -42,12 +42,13 @@ class Header extends React.Component {
     let condRender;
     if (login) {
       return <Redirect push to="/loginSignup" />;
-    } else if (!login) {
-      condRender = (<FlatButton
-        label="Login / Sign up"
-        onClick={this.toLogin}
-      />);
     }
+    // else if (!login) {
+    //   condRender = (<FlatButton
+    //     label="Login / Sign up"
+    //     onClick={this.toLogin}
+    //   />);
+    // }
     return (
       <div>
         <AppBar
@@ -57,7 +58,10 @@ class Header extends React.Component {
             width="50"
             height="50"
           />}
-          iconElementRight={condRender}
+          iconElementRight={<FlatButton
+            label="Login / Sign up"
+            onClick={this.toLogin}
+          />}
         />
       </div>
     )

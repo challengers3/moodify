@@ -1,33 +1,26 @@
 import React from 'react';
-import { Switch, Route, Link } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
+
 import LoginSignup from './LoginSignup';
-import App from './App';
+import Main from './Main';
 import Signup from './Signup';
 
-class Router extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-    };
-  }
+const Router = () => (
+  <Switch>
+    <Route
+      exact path="/"
+      component={Main}
+    />
+    <Route
+      path="/loginSignup"
+      component={LoginSignup}
+    />
+    <Route
+      path="/signup"
+      component={Signup}
+    />
+  </Switch>
+);
 
-  render() {
-    return (
-      <div>
-        <Switch>
-          <Route exact path="/" >
-            <App />
-          </Route>
-          <Route path="/loginSignup">
-            <LoginSignup />
-          </Route>
-          <Route path="/signup">
-            <Signup />
-          </Route>
-        </Switch>
-      </div>
-    );
-  }
-}
 
 export default Router;

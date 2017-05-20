@@ -5,16 +5,17 @@ import axios from 'axios';
 import { Redirect, Switch, Route, Link } from 'react-router-dom';
 
 // sub components
-import Lyrics from './Lyrics.jsx';
-import Mood from './Mood.jsx';
-import Player from './Player.jsx';
-import Search from './Search.jsx';
-import Header from './Header.jsx';
-import SearchResults from './SearchResults.jsx';
-import User from './User.jsx';
-import LoginSignup from './LoginSignup.jsx';
-import PastSearchResults from './PastSearchResults.jsx';
+import Lyrics from './Lyrics';
+import Mood from './Mood';
+import Player from './Player';
+import Search from './Search';
+import SearchResults from './SearchResults';
+import User from './User';
+import LoginSignup from './LoginSignup';
+import PastSearchResults from './PastSearchResults';
+import Header from './Header';
 import styles from '../../dist/css/styles';
+import App from './App';
 
 class Main extends React.Component {
   constructor(props) {
@@ -190,10 +191,11 @@ class Main extends React.Component {
   render() {
     const isLoginS = this.state.loginS;
     if (isLoginS) {
-      return <Redirect push to="/loginSignup" />;
+      return <Link to="/loginSignup" />;
     }
     return (
       <div>
+      <Header />
         <div
           style={styles.container}
         >

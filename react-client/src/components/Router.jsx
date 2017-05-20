@@ -5,7 +5,7 @@ import LoginSignup from './LoginSignup';
 import Main from './Main';
 import Signup from './Signup';
 
-const Router = () => (
+const Router = (props) => (
   <Switch>
     <Route
       exact path="/"
@@ -13,8 +13,8 @@ const Router = () => (
     />
     <Route
       path="/loginSignup"
-      component={LoginSignup}
-    />
+      // component={LoginSignup}
+    ><LoginSignup toLogin={props.toLogin}/></Route>
     <Route
       path="/signup"
       component={Signup}

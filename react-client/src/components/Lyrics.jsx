@@ -29,8 +29,6 @@ class Lyrics extends React.Component {
     if (this.state.expanded && this.state.tone !== 'emotion') {
       this.setState({tone: 'emotion'});
     } else {
-            this.setState({tone: ' '});
-
       this.setState({tone: 'emotion'});
       this.setState({expanded: !this.state.expanded});
     }
@@ -40,8 +38,6 @@ class Lyrics extends React.Component {
     if (this.state.expanded && this.state.tone !== 'social') {
       this.setState({tone: 'social'});
     } else {
-            this.setState({tone: ' '});
-
       this.setState({tone: 'social'});
       this.setState({expanded: !this.state.expanded});
     }
@@ -51,7 +47,6 @@ class Lyrics extends React.Component {
     if (this.state.expanded && this.state.tone !== 'language') {
       this.setState({tone: 'language'});
     } else {
-      this.setState({tone: ' '});
       this.setState({tone: 'language'});
       this.setState({expanded: !this.state.expanded});
     }

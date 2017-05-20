@@ -67,7 +67,11 @@ class App extends React.Component {
       if (!res.data) {
         console.log('error');
       }
-      this.setState({ searchResults: res.data, searchResultsLoading: false });
+      this.setState({ 
+        searchResults: res.data, 
+        searchResultsLoading: false,
+        showPlayer: false, 
+      });
     });
   }
 
@@ -113,6 +117,7 @@ class App extends React.Component {
 
   showResults() {
     this.setState({
+      showPlayer: false, 
       showResults: !this.state.showResults,
     });
   }
@@ -169,7 +174,6 @@ class App extends React.Component {
               /> : null}
             {this.state.showPlayer ?
               <Lyrics 
-                showPlayer={this.state.showPlayer} 
                 spotifyURI={this.state.spotifyURI}
                 spotifyAlbumArt={this.state.spotifyAlbumArt}
                 loading={this.state.spotifyLoading}

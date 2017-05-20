@@ -13,13 +13,7 @@ import SearchResults from './SearchResults.jsx';
 import User from './User.jsx';
 import LoginSignup from './LoginSignup.jsx';
 import PastSearchResults from './PastSearchResults.jsx';
-import injectTapEventPlugin from 'react-tap-event-plugin';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import styles from '../../dist/css/styles';
-
-// Needed for onTouchTap
-// http://stackoverflow.com/a/34015469/988941
-injectTapEventPlugin();
 
 class App extends React.Component {
   constructor(props) {
@@ -46,6 +40,7 @@ class App extends React.Component {
       loggedIn: false,
       upDownUser: false,
       searchResultsLoadingUser: false,
+      loginS: false,
       // now: Date.now(),
     };
     this.search = this.search.bind(this);
@@ -55,6 +50,7 @@ class App extends React.Component {
     this.upDownUser = this.upDownUser.bind(this);
     this.showResultsUser = this.showResultsUser.bind(this);
     this.loadPastSearchResults = this.loadPastSearchResults.bind(this);
+    this.loginSignup = this.loginSignup.bind(this);
   }
 
   componentDidMount() {
@@ -74,10 +70,13 @@ class App extends React.Component {
     annyang.removeCommands();
   }
 
-  // this is where the issue with setstate no mount
   search(title, artist) {
-    console.log(title, artist)
-    this.setState({ showResults: true, searchResultsLoading: true, showPrev: true, upDown: false });
+    this.setState({
+      showResults: true,
+      searchResultsLoading: true,
+      showPrev: true,
+      upDown: false,
+    });
 
     const options = {
       title,
@@ -99,18 +98,14 @@ class App extends React.Component {
     this.setState({
       showPlayer: true,
       spotifyLoading: true,
-    }, this.setState({
       lyricsLoading: true,
       showResults: false,
-    }, this.setState({
       showResultsUser: false,
       upDownUser: false,
-    }, this.setState({
       showLyrics: false,
       showMood: false,
-    }, this.setState({
       upDown: true,
-    })))));
+    });
 
     const input = {};
     input.track_id = trackObj.track_id;
@@ -186,13 +181,33 @@ class App extends React.Component {
     }).catch(err => console.log(err));
   }
 
+  loginSignup() {
+    console.log('Is in LOGIN')
+    this.setState({
+      loginS: true,
+    });
+  }
+
   render() {
+    const isLoginS = this.state.isLoginS;
+    if (isLoginS) {
+
+    }
     return (
-      <MuiThemeProvider>
-        <div>
-          <Header url={this.state.url} />
-          <div style={styles.container}>
-            <Search search={this.search} prev={this.showResults} showPrev={this.state.showPrev} upDown={this.state.upDown} runUpDown={this.upDown} />
+      <div>
+          <Header
+            login={this.loginSignup}
+            url={this.state.url}
+          />
+          <div
+            style={styles.container}>
+            <Search
+              search={this.search}
+              prev={this.showResults}
+              showPrev={this.state.showPrev}
+              upDown={this.state.upDown}
+              runUpDown={this.upDown}
+            />
             {this.state.showResults ?
               <SearchResults
                 results={this.state.searchResults}
@@ -221,25 +236,8 @@ class App extends React.Component {
                 loadPastSearchResults={this.loadPastSearchResults}
               />
             </div>
-              />
-              : null}
-          </div>
-          <div className="col2">
-            <User
-              showPrev={this.state.showResultsUser}
-              prev={this.showResultsUser} upDown={this.state.upDownUser}
-              runUpDown={this.upDownUser} process={this.process}
-              searchResultsLoading={this.state.searchResultsLoadingUser}
-              loadPastSearchResults={this.loadPastSearchResults}
-            /> {this.state.showMood
-              ? <Mood
-                watson={this.state.watson}
-                songNameAndArtist={this.state.currentSongNameAndArtist}
-              />
-              : null}
           </div>
         </div>
-      </MuiThemeProvider>
     );
   }
 }

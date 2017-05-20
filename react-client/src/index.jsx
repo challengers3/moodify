@@ -3,9 +3,15 @@ import ReactDOM from 'react-dom';
 import Router from './components/Router.jsx';
 import pathToRegexp from 'path-to-regexp';
 import { BrowserRouter } from 'react-router-dom';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+
+injectTapEventPlugin();
 
 ReactDOM.render((
-	<BrowserRouter>
-	  <Router />
-	</BrowserRouter>
-	), document.getElementById('root'));
+  <MuiThemeProvider>
+    <BrowserRouter>
+      <Router />
+    </BrowserRouter>
+  </MuiThemeProvider>
+), document.getElementById('root'));

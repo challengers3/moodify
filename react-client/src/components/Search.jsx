@@ -36,7 +36,7 @@ class Search extends React.Component {
   handleArtistChange(e) { this.setState({ artist: e.target.value }); }
 
   handleSubmit(e) {
-    e.preventDefault();
+    // e.preventDefault();
     this.props.search(this.state.title, this.state.artist);
     this.setState({ title: '', artist: '', showPrev: true });
   }
@@ -50,11 +50,19 @@ class Search extends React.Component {
   render() {
     return (
       <div style={styles.search}>
-        <form onSubmit={this.handleSubmit}>
-          <TextField hintText='Title' value={this.state.title} onChange={this.handleTitleChange}/>
-          <TextField hintText='Artist' value={this.state.artist} onChange={this.handleArtistChange}/>
-          <FlatButton label="Search" onTouchTap={this.handleSubmit} />
-        </form>
+        {/* <form onSubmit={this.handleSubmit}> */}
+          <TextField
+            hintText='Title'
+            value={this.state.title}
+            onChange={this.handleTitleChange}
+          />
+          <TextField
+            hintText='Artist'
+            value={this.state.artist}
+            onChange={this.handleArtistChange}
+          />
+          <FlatButton label="Search" onClick={this.handleSubmit} />
+        {/* </form> */}
           <button
             className="submitbutton"
             onClick={Search.clickVoice}

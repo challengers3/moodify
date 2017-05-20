@@ -2,6 +2,8 @@ import React from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import axios from 'axios';
 
+import Header from './Header';
+
 class Signup extends React.Component {
   constructor(props) {
     super(props);
@@ -42,6 +44,8 @@ class Signup extends React.Component {
       return <Redirect push to="/" />;
     }
     return (
+      <div>
+      <Header />
       <div className="forms">
         <div className="signupForm">
           Need to sign up?
@@ -71,6 +75,7 @@ class Signup extends React.Component {
           <br />
         </div>
       </div>
+    </div>
     );
   }
 }

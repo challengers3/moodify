@@ -6,7 +6,7 @@ import { Redirect, Switch, Route, Link } from 'react-router-dom';
 import Facebook_key from '../../../config/config.dev.js'
 
 // sub components
-import Lyrics from './Lyrics';
+import SongCard from './SongCard';
 import Mood from './Mood';
 import Player from './Player';
 import Search from './Search';
@@ -45,6 +45,7 @@ class Main extends React.Component {
       loginS: false,
       signupView: false,
       mainView: false,
+      watsonLyrics: '',
       // now: Date.now(),
     };
     this.search = this.search.bind(this);
@@ -125,6 +126,7 @@ class Main extends React.Component {
         watson: data[2],
         spotifyURI: data[3],
         spotifyAlbumArt: data[4],
+        watsonLyrics: data[5],
         spotifyLoading: false,
         lyricsLoading: false,
         showLyrics: true,
@@ -206,7 +208,7 @@ class Main extends React.Component {
               searchResultsLoading={this.state.searchResultsLoading}
             /> : null}
           {this.state.showPlayer ?
-            <Lyrics
+            <SongCard
               showPlayer={this.state.showPlayer}
               spotifyURI={this.state.spotifyURI}
               spotifyAlbumArt={this.state.spotifyAlbumArt}
@@ -215,6 +217,7 @@ class Main extends React.Component {
               loading={this.state.lyricsLoading}
               songNameAndArtist={this.state.currentSongNameAndArtist}
               watson={this.state.watson}
+              watsonLyrics={this.state.watsonLyrics}
             /> : null}
           <div style={styles.cardStyle}>
             <User

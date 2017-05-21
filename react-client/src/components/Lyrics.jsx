@@ -9,9 +9,13 @@ class Lyrics extends React.Component {
   }
 
   render() {
-    console.log(this.props)
+    // console.log(this.props);
+    let condRender;
+    if (!this.props.watsonLyrics.utterances_tone) {
+      return null;
+    }
     return (
-        <div>{this.props.watsonLyrics.utterances_tone.map( 
+        <div>{this.props.watsonLyrics.utterances_tone.map(
           (lyrics, i) => <Line key={i} line={lyrics} /> )}</div>
     );
   }

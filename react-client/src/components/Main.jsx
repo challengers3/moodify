@@ -172,13 +172,13 @@ class Main extends React.Component {
         currentSongNameAndArtist: [
           songData.track_name, songData.artist_name,
         ],
-      }, this.setState({
+      }, () => this.setState({
         watson: watsonData,
         spotifyURI: songData.spotify_uri,
-      }, this.setState({
+      }, () => this.setState({
         showMood: true,
         showPlayer: true,
-      }, this.setState({
+      }, () => this.setState({
         showLyrics: true,
       }))));
     }).catch(err => console.log(err));
@@ -221,6 +221,7 @@ class Main extends React.Component {
             /> : null}
           <div style={styles.cardStyle}>
             <User
+              toLogin={this.props.toLogin}
               showPrev={this.state.showResultsUser}
               prev={this.showResultsUser}
               upDown={this.state.upDownUser}

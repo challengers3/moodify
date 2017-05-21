@@ -1,7 +1,6 @@
 import React from 'react';
 import axios from 'axios';
 import { Redirect, Link } from 'react-router-dom';
-import Header from './Header';
 
 const config = require('../../../config/index.js');
 const Facebook_key = config.Facebook_key;
@@ -74,7 +73,8 @@ class LoginSignup extends React.Component {
           directSignup: true,
         });
       }
-    });
+    })
+    .then(this.props.toLogin);
   }
 
   statusChangeCallback(response) {
@@ -113,7 +113,7 @@ class LoginSignup extends React.Component {
       }
       FB.getLoginStatus(() => {
         this.statusChangeCallback(response);
-      });
+      })
     }, { auth_type: 'reauthenticate' });
   }
 
@@ -143,7 +143,6 @@ class LoginSignup extends React.Component {
     }
     return (
       <div>
-        <Header />
         <div className="forms">
           <div className="loginForm">
         Have an account?

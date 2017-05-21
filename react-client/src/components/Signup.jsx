@@ -2,7 +2,6 @@ import React from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import axios from 'axios';
 
-import Header from './Header';
 
 class Signup extends React.Component {
   constructor(props) {
@@ -45,7 +44,6 @@ class Signup extends React.Component {
     }
     return (
       <div>
-      <Header />
       <div className="forms">
         <div className="signupForm">
           Need to sign up?

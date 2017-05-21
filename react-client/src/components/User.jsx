@@ -100,14 +100,6 @@ class User extends React.Component {
     return (
       <div className="allUser">
         <div className="user">
-          {renderif(!isLogin)(
-            <div>
-              <button className="loginButton" onClick={this.redirect}>
-                Login/Signup!
-              </button>
-              {/* <button onClick={this.loginFB} className="loginButton">Facebook Login</button> */}
-            </div>,
-          )}
           {renderif(isLogin)(
             <button className="loginButton" onClick={this.logout}>
               Logout!

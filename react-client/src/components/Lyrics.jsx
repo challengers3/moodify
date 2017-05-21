@@ -65,27 +65,31 @@ class Lyrics extends React.Component {
       );
     } else {
       return (
-        <Card style={styles.cardStyle} expanded={this.state.expanded} onExpandChange={this.handleExpandChange}>
-          <CardMedia
-            overlay={<CardTitle title={this.props.songNameAndArtist[0] + ' - ' + this.props.songNameAndArtist[1]}/>}
-          >
-            <img src={this.props.spotifyAlbumArt} style={styles.img}/>
-          </CardMedia>
-          <CardText>
-            {this.props.showPlayer ?
-            <Player spotifyURI={this.props.spotifyURI} loading={this.props.loading}/>
-          : null }
-            <pre>{this.props.lyrics}</pre>
-          </CardText>
-          <CardText expandable={true}>
-            <Mood watson={this.props.watson} tone={this.state.tone}/>
-          </CardText>
-          <CardActions>
-            <FlatButton label="Language Analysis" onTouchTap={this.handleLanguageToggle} />
-            <FlatButton label="Emotion Analysis" onTouchTap={this.handleEmotionToggle} />
-            <FlatButton label="Social Analysis" onTouchTap={this.handleSocialToggle} />
-          </CardActions>
-        </Card>
+        <div style={{display: 'table'}} >
+          <div style={{display: 'table-row'}} >
+            <Card style={styles.cardStyle} expanded={this.state.expanded} onExpandChange={this.handleExpandChange}>
+              <CardMedia
+                overlay={<CardTitle title={this.props.songNameAndArtist[0] + ' - ' + this.props.songNameAndArtist[1]}/>}
+              >
+                <img src={this.props.spotifyAlbumArt} style={styles.img}/>
+              </CardMedia>
+              <CardText>
+                {this.props.showPlayer ?
+                <Player spotifyURI={this.props.spotifyURI} loading={this.props.loading}/>
+              : null }
+                <pre>{this.props.lyrics}</pre>
+              </CardText>
+              <CardText expandable={true}>
+                <Mood watson={this.props.watson} tone={this.state.tone}/>
+              </CardText>
+              <CardActions>
+                <FlatButton label="Language Analysis" onTouchTap={this.handleLanguageToggle} />
+                <FlatButton label="Emotion Analysis" onTouchTap={this.handleEmotionToggle} />
+                <FlatButton label="Social Analysis" onTouchTap={this.handleSocialToggle} />
+              </CardActions>
+            </Card>
+          </div>
+        </div>
       );
     }
   }

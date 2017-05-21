@@ -6,9 +6,11 @@ const getSongByTitleAndArtist = (title, artist) => {
   return request.getAsync(rootURL + 'search?q=track:' + title + '%20artist:' + artist + '&type=track')
   .then(data => {
     let parsedData = JSON.parse(data.body);
+    console.log('ParseData', parsedData.tracks.items[0].artists[0].id)
     let spotifyData = {
       uri: parsedData.tracks.items[0].uri,
-      albumArt: parsedData.tracks.items[0].album.images[0].url
+      albumArt: parsedData.tracks.items[0].album.images[0].url,
+      // artist_id: parsedData.tracks.items[0].artists[0].id,
     }
     return spotifyData;
   })

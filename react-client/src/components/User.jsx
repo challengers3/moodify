@@ -19,7 +19,7 @@ class User extends React.Component {
     this.redirect = this.redirect.bind(this);
     this.pastSearch = this.pastSearch.bind(this);
     this.statusChangeCallback = this.statusChangeCallback.bind(this);
-    this.loginFB = this.loginFB.bind(this);
+    // this.loginFB = this.loginFB.bind(this);
   }
 
 
@@ -32,10 +32,12 @@ class User extends React.Component {
   }
 
   logout() {
-    FB.logout(console.log('FB logout'));
+    // FB.logout(this.props.toLogin);
     axios.get('/logout').then((res) => {
       this.setState({ loggedIn: false, pastSearchResults: [] });
-    });
+    })
+    .then(FB.logout(console.log('FB out')))
+    .then(this.props.toLogin);
   }
 
   redirect() {
@@ -65,28 +67,28 @@ class User extends React.Component {
     }
   }
 
-  loginFB() {
-    FB.login((response) => {
-      if (response.authResponse) {
-        FB.api('/me', (response) => {
-          console.log(`FB Login, username: ${response.name}.`);
-          const user = {};
-          user.username = response.name;
-          user.password = '*FBDefault*';
-          axios.post('/login', user)
-          .then((res) => {
-            if (!res.data.errorMessage) {
-              this.setState({ loggedIn: true })
-            }
-            axios.post('/signup', user)
-            .then(this.setState({ loggedIn: true }))
-          })
-        });
-      } else {
-        console.log('User cancelled');
-      }
-    });
-  }
+  // loginFB() {
+  //   FB.login((response) => {
+  //     if (response.authResponse) {
+  //       FB.api('/me', (response) => {
+  //         console.log(`FB Login, username: ${response.name}.`);
+  //         const user = {};
+  //         user.username = response.name;
+  //         user.password = '*FBDefault*';
+  //         axios.post('/login', user)
+  //         .then((res) => {
+  //           if (!res.data.errorMessage) {
+  //             this.setState({ loggedIn: true })
+  //           }
+  //           axios.post('/signup', user)
+  //           .then(this.setState({ loggedIn: true }))
+  //         })
+  //       });
+  //     } else {
+  //       console.log('User cancelled');
+  //     }
+  //   });
+  // }
 
   render() {
     const isRedirect = this.state.redirect;

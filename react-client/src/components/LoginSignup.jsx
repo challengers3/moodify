@@ -75,10 +75,10 @@ class LoginSignup extends React.Component {
         this.setState({
           // userError: res.data.errorMessage,
           directSignup: true,
-        });
+        }, () => this.props.toLogin);
       }
     })
-    .then(this.props.toLogin);
+    // .then(this.props.toSession);
   }
 
   statusChangeCallback(response) {
@@ -105,15 +105,22 @@ class LoginSignup extends React.Component {
           user.password = response.id;
           axios.post('/login', user)
           .then((res) => {
-            if (!res.data.errorMessage) {
+            console.log('in /login', !res.data.errorMessage)
+            if (res.data.errorMessage === 'user not found') {
               axios.post('/signup', user)
-              .then(this.setState({ redirect: true }))
+              .then(this.setState({
+                redirect: true,
+              }, () => this.props.toLogin))
+            } else {
+              this.setState({
+                redirect: true,
+              }, () => this.props.toLogin)
             }
           })
         });
       } else {
         console.log('User cancelled');
-        this.setState({ redirect: true })
+        this.setState({ directSignup: true })
       }
       FB.getLoginStatus(() => {
         this.statusChangeCallback(response);
@@ -147,7 +154,7 @@ class LoginSignup extends React.Component {
     }
     return (
         <Paper zDepth={1} style={styles.login}>
-          <div style={{textAlign: 'center'}}>Have an account?</div> 
+          <div style={{textAlign: 'center'}}>Have an account?</div>
           <div style={{float:'left'}}>
             <button onClick={this.loginFB} className="loginButton">Facebook Login</button>
           </div>

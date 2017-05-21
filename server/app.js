@@ -52,8 +52,7 @@ app.get('/logout', (req, res) => {
   res.send('logged out!')
 })
 
-app.get('/search', (req, res) => {
-  console.log(req)
+app.post('/search', (req, res) => {
   return mmHelpers.searchByTitleAndArtist(req.body.title, req.body.artist)
   .then(data => {
     if (data.track_list.length === 0) { res.send({errorMessage: 'No Search Results'}); }
@@ -125,7 +124,7 @@ app.post('/process', (req, res) => {
     })
   })
   .then(() => {
-    res.json([songNameAndArtist, input.lyrics, watsonData, input.spotify_uri, input.spotify_albumArt]);
+    res.json([songNameAndArtist, input.lyrics, watsonData, input.spotify_uri, input.spotify_albumArt, watsonData.lyrics]);
   })
   .catch((error) => {
     console.log('/PROCESS ERROR: ', error);

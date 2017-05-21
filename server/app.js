@@ -52,7 +52,8 @@ app.get('/logout', (req, res) => {
   res.send('logged out!')
 })
 
-app.post('/search', (req, res) => {
+app.get('/search', (req, res) => {
+  console.log(req)
   return mmHelpers.searchByTitleAndArtist(req.body.title, req.body.artist)
   .then(data => {
     if (data.track_list.length === 0) { res.send({errorMessage: 'No Search Results'}); }

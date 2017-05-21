@@ -30,14 +30,14 @@ const styles = {
   },
   search: {
     width: '50%',
-    margin: '0 auto'
+    margin: '2% auto 2%'
   },
   loading: {
     margin: '0 auto',
     size: 160,
     thickness: 7,
     width: '100%',
-    margin: '25% auto'
+    margin: '10% auto'
   },
   searchResults: {
     display: 'table',
@@ -49,7 +49,12 @@ const styles = {
   cardStyle: {
     display: 'table',
     width: '55%',    
-    margin: '0 auto'
+    margin: '0 auto' 
+  },
+  login: {
+    display: 'table',
+    width: '33%',    
+    margin: '2% auto' 
   }
 };
 

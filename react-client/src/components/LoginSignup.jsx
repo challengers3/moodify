@@ -1,6 +1,10 @@
 import React from 'react';
 import axios from 'axios';
 import { Redirect, Link } from 'react-router-dom';
+import styles from '../../dist/css/styles';
+import Paper from 'material-ui/Paper';
+import FlatButton from 'material-ui/FlatButton';
+import TextField from 'material-ui/TextField';
 
 const config = require('../../../config/index.js');
 const Facebook_key = config.Facebook_key;
@@ -142,12 +146,14 @@ class LoginSignup extends React.Component {
       return <Redirect push to="/signup" />;
     }
     return (
-      <div>
-        <div className="forms">
-          <div className="loginForm">
-        Have an account?
-        <br />
-            <input
+        <Paper zDepth={1} style={styles.login}>
+          <div style={{textAlign: 'center'}}>Have an account?</div> 
+          <div style={{float:'left'}}>
+            <button onClick={this.loginFB} className="loginButton">Facebook Login</button>
+          </div>
+
+          <div style={{float:'right'}}>
+            <TextField
               type="text"
               className="inputText"
               name="usernameL" value={this.state.usernameL}
@@ -155,7 +161,7 @@ class LoginSignup extends React.Component {
               onChange={this.usernameChangeL}
             />
             <br />
-            <input
+            <TextField
               type="password"
               className="inputText"
               name="passwordL"
@@ -164,14 +170,13 @@ class LoginSignup extends React.Component {
               onChange={this.passwordChangeL}
             />
             <br />
-            <button
+            <FlatButton
               onClick={this.handleLogin}
               className="loginButton"
-            > Login </button>
+            > Login </FlatButton>
             <br />
-            <button onClick={this.loginFB} className="loginButton">Facebook Login</button>
           </div>
-        </div></div>
+        </Paper>
     );
   }
 }

@@ -1,7 +1,10 @@
 import React from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import axios from 'axios';
-
+import styles from '../../dist/css/styles';
+import Paper from 'material-ui/Paper';
+import FlatButton from 'material-ui/FlatButton';
+import TextField from 'material-ui/TextField';
 
 class Signup extends React.Component {
   constructor(props) {
@@ -43,12 +46,10 @@ class Signup extends React.Component {
       return <Redirect push to="/" />;
     }
     return (
-      <div>
-      <div className="forms">
-        <div className="signupForm">
-          Need to sign up?
+        <Paper zDepth={1} style={styles.login}>
+          <div style={{textAlign: 'center'}}>Need to sign up?
           <br />
-          <input
+          <TextField
             type="text"
             className="inputText"
             name="usernameS"
@@ -57,7 +58,7 @@ class Signup extends React.Component {
             onChange={this.usernameChangeS}
           />
           <br />
-          <input
+          <TextField
             type="password"
             className="inputText"
             name="passwordS"
@@ -66,14 +67,12 @@ class Signup extends React.Component {
             onChange={this.passwordChangeS}
           />
           <br />
-          <button
+          <FlatButton
             onClick={this.handleSignup}
             className="loginButton"
-          > Signup </button>
-          <br />
-        </div>
-      </div>
-    </div>
+          > Signup </FlatButton>
+        </div> 
+      </Paper>
     );
   }
 }

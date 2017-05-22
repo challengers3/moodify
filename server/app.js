@@ -48,9 +48,20 @@ app.get('/check', (req, res) => {
 });
 
 app.get('/logout', (req, res) => {
-  req.session.destroy()
-  res.send('logged out!')
-})
+  req.session.destroy();
+  res.send('logged out!');
+});
+
+app.get('/toptracks', (req, res) => {
+  console.log(req.query.query)
+  return spotifyHelpers.getTopTracks(req.query.query)
+  .then((results) => {
+    console.log('RESULT IS', results);
+    // res.end(results);
+  });
+});
+
+// working zone
 
 app.post('/search', (req, res) => {
   return mmHelpers.searchByTitleAndArtist(req.body.title, req.body.artist)
@@ -117,8 +128,12 @@ app.post('/process', (req, res) => {
   .then((spotifyData) => {
     input.spotify_uri = spotifyData.uri;
     input.spotify_albumArt = spotifyData.albumArt;
+    input.artist_id = spotifyData.artist_id;
+
+    console.log('spotifydata is', input);
 
     const songEntry = new db.Song(input);
+    console.log('songEntry is', songEntry)
     songEntry.save(err => {
       if (err) { console.log("SAVE SONG ERROR"); }
     })

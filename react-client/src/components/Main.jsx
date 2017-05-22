@@ -46,6 +46,7 @@ class Main extends React.Component {
       signupView: false,
       mainView: false,
       watsonLyrics: '',
+      toptracks: '',
       // now: Date.now(),
     };
     this.search = this.search.bind(this);
@@ -55,6 +56,7 @@ class Main extends React.Component {
     this.upDownUser = this.upDownUser.bind(this);
     this.showResultsUser = this.showResultsUser.bind(this);
     this.loadPastSearchResults = this.loadPastSearchResults.bind(this);
+    this.getTopByArtist = this.getTopByArtist.bind(this);
   }
 
   componentDidMount() {
@@ -92,6 +94,7 @@ class Main extends React.Component {
       if (!res.data) {
         console.log('error');
       }
+      console.log('SEARCH RES IS', res.data)
       this.setState({ searchResults: res.data, searchResultsLoading: false });
     });
   }
@@ -183,11 +186,23 @@ class Main extends React.Component {
     }).catch(err => console.log(err));
   }
 
+  getTopByArtist(id) {
+    console.log('get top by artist')
+    this.setState({
+      showResults: true,
+      searchResultsLoading: true,
+      showPrev: true,
+      upDown: false,
+      showPlayer: false,
+    });
+    axios.get(`/toptracks?query=${id}`)
+    .then((res) => {
+      console.log('RES from main', res)
+      // this.setState({ searchResults: res.data, searchResultsLoading: false });
+    })
+  }
+
   render() {
-    // const isLoginS = this.state.loginS;
-    // if (isLoginS) {
-    //   return <Link to="/loginSignup" />;
-    // }
     return (
       <div>
         <div
@@ -208,6 +223,7 @@ class Main extends React.Component {
             /> : null}
           {this.state.showPlayer ?
             <SongCard
+              getTopByArtist={this.getTopByArtist}
               showPlayer={this.state.showPlayer}
               spotifyURI={this.state.spotifyURI}
               spotifyAlbumArt={this.state.spotifyAlbumArt}

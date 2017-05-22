@@ -20,25 +20,28 @@ class SearchResults extends React.Component {
   render() {
     if (this.props.searchResultsLoading) {
       return (
-          <CircularProgress style={styles.loading} />
+        <CircularProgress style={styles.loading} />
       );
     } else if (this.props.results.errorMessage) {
       return (
         <div className="errorMessage">{this.props.results.errorMessage}</div>
       );
-    } else {
-      return (
-        <div style={styles.searchResults}>
-           <Paper zDepth={1} >
-              <List>
-                {this.props.results.track_list.map((trackObj, i) => (
-                  <ListItem key={i}><div value={i} onClick={this.handleClick} >{trackObj.track.track_name} - {trackObj.track.artist_name}</div></ListItem>
-                ))}
-              </List>
-            </Paper>
-        </div>
-      );
     }
+    return (
+      <div style={styles.searchResults}>
+        <Paper zDepth={1} >
+          <List>
+            {this.props.results.track_list.map((trackObj, i) => (
+              <ListItem
+                key={i}
+              ><div
+                value={i} onClick={this.handleClick}
+              >{trackObj.track.track_name} - {trackObj.track.artist_name}</div></ListItem>
+                ))}
+          </List>
+        </Paper>
+      </div>
+    );
   }
 }
 

@@ -17,15 +17,16 @@ db.once('open', () => {
 });
 
 let songSchema = mongoose.Schema({
-	track_id: {type: Number, unique: true},
-	track_name: String,
-	artist_name: String,
-	album_coverart_100x100: String,
-	album_coverart_350x350: String,
-	album_coverart_500x500: String,
-	album_coverart_800x800: String,
-	lyrics: String,
-  spotify_uri: String
+  track_id: {type: Number, unique: true},
+  track_name: String,
+  artist_name: String,
+  artist_id: String,
+  album_coverart_100x100: String,
+  album_coverart_350x350: String,
+  album_coverart_500x500: String,
+  album_coverart_800x800: String,
+  lyrics: String,
+  spotify_uri: String,
 });
 songSchema.plugin(beautifyUnique);
 const Song = mongoose.model('Song', songSchema);
@@ -57,10 +58,10 @@ let watsonSchema = mongoose.Schema({
 watsonSchema.plugin(beautifyUnique);
 const Watson = mongoose.model('Watson', watsonSchema);
 
-let userSchema = mongoose.Schema({
-  username: {type: String, unique: true},
+const userSchema = mongoose.Schema({
+  username: { type: String, unique: true },
   password: String,
-  songs: [Number]
+  songs: [Number],
 });
 userSchema.plugin(beautifyUnique);
 const User = mongoose.model('User', userSchema);

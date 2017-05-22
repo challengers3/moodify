@@ -19,6 +19,7 @@ class SongCard extends React.Component {
       title: ' ',
       artist: ' ',
       tone: ' ',
+      category: ' ',
       expanded: false,
       open: false,
       dialogOpen: false,
@@ -30,6 +31,16 @@ class SongCard extends React.Component {
     this.handleDrawerToggle = this.handleDrawerToggle.bind(this);
     this.handleDialogToggle = this.handleDialogToggle.bind(this);
     this.handleTopTrack = this.handleTopTrack.bind(this);
+    this.handleMenuAnger = this.handleMenuAnger.bind(this);
+    this.handleMenuFear = this.handleMenuFear.bind(this);
+    this.handleMenuJoy = this.handleMenuJoy.bind(this);
+    this.handleMenuSadness = this.handleMenuSadness.bind(this);
+    this.handleMenuDisgust = this.handleMenuDisgust.bind(this);
+    this.handleMenuAgreea = this.handleMenuAgreea.bind(this);
+    this.handleMenuConsc = this.handleMenuConsc.bind(this);
+    this.handleMenuExtra = this.handleMenuExtra.bind(this);
+    this.handleMenuOpenness = this.handleMenuOpenness.bind(this);
+    this.handleMenuRange = this.handleMenuRange.bind(this); 
   }
 
   handleExpandChange(expanded) {
@@ -44,13 +55,10 @@ class SongCard extends React.Component {
     this.setState({dialogOpen: !this.state.dialogOpen});
   }
 
-  handleEmotionToggle(event) {
-    if (this.state.expanded && this.state.tone !== 'emotion') {
-      this.setState({tone: 'emotion'});
-    } else {
-      this.setState({tone: 'emotion'});
-      this.handleDialogToggle();
-    }
+  handleEmotionToggle() {
+    console.log(this.props.watson)
+    this.setState({category: 'emotion'});
+    this.handleDialogToggle();
   };
 
   handleSocialToggle(event) {
@@ -76,7 +84,59 @@ class SongCard extends React.Component {
     this.props.getTopByArtist(this.props.songNameAndArtist[0]);
   }
 
+  handleMenuAnger() {
+    this.setState({tone: 'anger'});
+    this.setState({category: 'emotion'});
+  }
+
+  handleMenuFear() {
+    this.setState({tone: 'fear'});
+    this.setState({category: 'emotion'});
+  }
+
+  handleMenuDisgust() {
+    this.setState({tone: 'disgust'});
+    this.setState({category: 'emotion'});
+  }
+
+  handleMenuSadness() {
+    this.setState({tone: 'sadness'});
+    this.setState({category: 'emotion'});
+  }
+
+  handleMenuJoy() {
+    this.setState({tone: 'joy'});
+    this.setState({category: 'emotion'});
+  }  
+
+  handleMenuOpenness() {
+    this.setState({tone: 'openness'});
+    this.setState({category: 'social'});
+  }
+
+  handleMenuConsc() {
+    this.setState({tone: 'conscientiousness'});
+    this.setState({category: 'social'});
+  }
+
+  handleMenuAgreea() {
+    this.setState({tone: 'agreeableness'});
+    this.setState({category: 'social'});
+  }
+
+  handleMenuExtra() {
+    this.setState({tone: 'extraversion'});
+    this.setState({category: 'social'});
+  }
+
+  handleMenuRange() {
+    this.setState({tone: 'range'});
+    this.setState({category: 'social'});
+  }  
+
+
   render() {
+    console.log('category', this.state.category)
     const actions = [
       <FlatButton
         label="Okay"
@@ -98,19 +158,20 @@ class SongCard extends React.Component {
             onRequestChange={(open) => this.setState({open})}
             overlayStyle={{backgroundColor: 'transparent'}}
           >
+            <h2>Tones</h2>
             <MenuItem style={{fontWeight: 'bold'}} onTouchTap={this.handleEmotionToggle}>Emotion</MenuItem>
-            <MenuItem>Anger</MenuItem>
-            <MenuItem>Disgust</MenuItem>
-            <MenuItem>Fear</MenuItem>
-            <MenuItem>Sadness</MenuItem>
-            <MenuItem>Joy</MenuItem>
+            <MenuItem onTouchTap={this.handleMenuAnger}>Anger</MenuItem>
+            <MenuItem onTouchTap={this.handleMenuDisgust}>Disgust</MenuItem>
+            <MenuItem onTouchTap={this.handleMenuFear}>Fear</MenuItem>
+            <MenuItem onTouchTap={this.handleMenuSadness}>Sadness</MenuItem>
+            <MenuItem onTouchTap={this.handleMenuJoy}>Joy</MenuItem>
             <Divider />
             <MenuItem style={{fontWeight: 'bold'}} onTouchTap={this.handleSocialToggle}>Social</MenuItem>
-            <MenuItem>Openness</MenuItem>
-            <MenuItem>Conscientiousness</MenuItem>
-            <MenuItem>Extraversion</MenuItem>
-            <MenuItem>Agreeableness</MenuItem>
-            <MenuItem>Emotional Range</MenuItem>
+            <MenuItem onTouchTap={this.handleMenuOpenness}>Openness</MenuItem>
+            <MenuItem onTouchTap={this.handleMenuConsc}>Conscientiousness</MenuItem>
+            <MenuItem onTouchTap={this.handleMenuExtra}>Extraversion</MenuItem>
+            <MenuItem onTouchTap={this.handleMenuAgreea}>Agreeableness</MenuItem>
+            <MenuItem onTouchTap={this.handleMenuRange}>Emotional Range</MenuItem>
             <Divider />
             <MenuItem style={{fontWeight: 'bold'}}  onTouchTap={this.handleLanguageToggle}>Language</MenuItem>
             <MenuItem>Analytical</MenuItem>
@@ -118,50 +179,39 @@ class SongCard extends React.Component {
             <MenuItem>Tentative</MenuItem>
           </Drawer>
 
-          <Card style={styles.cardStyle} expanded={this.state.expanded} onExpandChange={this.handleExpandChange}>
-            <CardMedia
-              overlay={<CardTitle title={this.props.songNameAndArtist[0] + ' - ' + this.props.songNameAndArtist[1]}/>}
-            >
-              <img src={this.props.spotifyAlbumArt} style={styles.img}/>
-            </CardMedia>
+          <Dialog
+            actions={actions}
+            open={this.state.dialogOpen}
+            onRequestClose={this.handleDialogToggle}
+          >
+          <Mood watson={this.props.watson} category={this.state.category}/>
+          </Dialog>
 
-            <CardText>
-              {this.props.showPlayer ?
-              <Player spotifyURI={this.props.spotifyURI} loading={this.props.loading}/>
-            : null }
-              <Lyrics watsonLyrics={this.props.watsonLyrics} />
-            </CardText>
-
-            <Dialog
-              actions={actions}
-              open={this.state.dialogOpen}
-              onRequestClose={this.handleDialogToggle}
-            >
-              <Mood watson={this.props.watson} tone={this.state.tone} />
-
-            </Dialog>
-            <RaisedButton
-              style={styles.tone}
-              label="Tone Data"
-              onTouchTap={this.handleDrawerToggle}
-            />
-            <RaisedButton
-              style={styles.top}
-              label="Top Ten Tracks"
-              onTouchTap={this.handleTopTrack}
-            />
-          </Card>
+          <div style={styles.cardContainer}>
+            <div style={{float:'left'}}>
+              <Card style={styles.cardStyle}>
+                <CardMedia
+                  overlay={<CardTitle title={this.props.songNameAndArtist[0] + ' - ' + this.props.songNameAndArtist[1]}/>}
+                >
+                  <img src={this.props.spotifyAlbumArt} style={styles.img}/>
+                </CardMedia>
+                </Card>
+              </div>
+              
+              <div style={{float:'left'}}>
+                <Card style={styles.cardStyle}>
+                <CardText style={{height: '572px'}}>
+                  {this.props.showPlayer ?
+                  <Player spotifyURI={this.props.spotifyURI} loading={this.props.loading}/>
+                : null }
+                  <Lyrics watsonLyrics={this.props.watsonLyrics} category={this.state.category} tone={this.state.tone}/>
+                </CardText>
+                <RaisedButton label="Tone Data" onTouchTap={this.handleDrawerToggle} />
+                <RaisedButton style={styles.top} label="Top Ten Tracks" onTouchTap={this.handleTopTrack} />
+              </Card>
+            </div>
+          </div>
         </div>
-// =======
-        //   </CardText>
-        //   <CardActions>
-        //     <FlatButton label="Language Analysis" onTouchTap={this.handleLanguageToggle} />
-        //     <FlatButton label="Emotion Analysis" onTouchTap={this.handleEmotionToggle} />
-        //     <FlatButton label="Social Analysis" onTouchTap={this.handleSocialToggle} />
-        //     <FlatButton label="Top Ten Tracks" onTouchTap={this.props.getTopByArtist} />
-        //   </CardActions>
-        // </Card>
-// >>>>>>> rebasing 10:05
       );
     }
   }

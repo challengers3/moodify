@@ -28,6 +28,12 @@ const styles = {
     width: '100%',
     textAlign: 'center',
   },
+  cardContainer: {
+    display: 'table',
+    maxWidth: '86%',    
+    margin: '0 auto',
+    textAlign: 'center'
+  },
   search: {
     width: '50%',
     margin: '2% auto 2%',
@@ -47,8 +53,8 @@ const styles = {
   },
   cardStyle: {
     display: 'table',
-    width: '55%',
-    margin: '0 auto',
+    //width: '55%',    
+    margin: '0 auto' 
   },
   login: {
     display: 'table',
@@ -61,6 +67,38 @@ const styles = {
   top: {
     float: 'right',
   },
+  noTone: {
+  },
+  anger: {
+    color:'#fc3d39',
+  },
+  fear: {
+    color:'#c13584',
+  },
+  disgust: {
+    color:'#53d769',
+  },
+  sadness: {
+    color:'#75afb8',
+  },
+  joy: {
+    color:'#fecb25'
+  },
+  openness: {
+    color:'#fc3d39',
+  },
+  conscientiousness: {
+    color:'#c13584',
+  },
+  extraversion: {
+    color:'#53d769',
+  },
+  agreeableness: {
+    color:'#75afb8',
+  },
+  agreeableness: {
+    color:'#fecb25'
+  }
 };
 
 export default styles;

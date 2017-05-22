@@ -40,7 +40,10 @@ class SongCard extends React.Component {
     this.handleMenuConsc = this.handleMenuConsc.bind(this);
     this.handleMenuExtra = this.handleMenuExtra.bind(this);
     this.handleMenuOpenness = this.handleMenuOpenness.bind(this);
-    this.handleMenuRange = this.handleMenuRange.bind(this); 
+    this.handleMenuRange = this.handleMenuRange.bind(this);
+    this.handleMenuAnalytical = this.handleMenuAnalytical.bind(this);
+    this.handleMenuConfident = this.handleMenuConfident.bind(this);
+    this.handleMenuTentative = this.handleMenuTentative.bind(this); 
   }
 
   handleExpandChange(expanded) {
@@ -56,27 +59,27 @@ class SongCard extends React.Component {
   }
 
   handleEmotionToggle() {
-    console.log(this.props.watson)
+    //console.log(this.props.watson)
     this.setState({category: 'emotion'});
     this.handleDialogToggle();
   };
 
   handleSocialToggle(event) {
-    if (this.state.expanded && this.state.tone !== 'social') {
-      this.setState({tone: 'social'});
-    } else {
-      this.setState({tone: 'social'});
+    // if (this.state.tone !== 'social') {
+    //   this.setState({tone: 'social'});
+    // } else {
+      this.setState({category: 'social'});
       this.handleDialogToggle();
-    }
+    // }
   };
 
   handleLanguageToggle(event) {
-    if (this.state.expanded && this.state.tone !== 'language') {
-      this.setState({tone: 'language'});
-    } else {
-      this.setState({tone: 'language'});
+    // if (this.state.tone !== 'language') {
+    //   this.setState({tone: 'language'});
+    // } else {
+      this.setState({category: 'language'});
       this.handleDialogToggle();
-    }
+    // }
   }
 
   handleTopTrack() {
@@ -133,6 +136,22 @@ class SongCard extends React.Component {
     this.setState({tone: 'range'});
     this.setState({category: 'social'});
   }  
+
+  handleMenuAnalytical() {
+    this.setState({tone: 'analytical'});
+    this.setState({category: 'language'});
+  }  
+
+  handleMenuConfident() {
+    this.setState({tone: 'confident'});
+    this.setState({category: 'language'});
+  }  
+
+  handleMenuTentative() {
+    this.setState({tone: 'tentative'});
+    this.setState({category: 'language'});
+  }  
+
 
 
   render() {

@@ -16,15 +16,15 @@ class Lyrics extends React.Component {
     let tone = ' ';
 
     let toneCode = (emotion) => {
-      if (emotion === 'anger' || emotion === 'openness') {
+      if (emotion === 'anger' || emotion === 'openness' || emotion === 'analytical') {
         return 0;
-      } else if (emotion === 'disgust' || emotion === 'conscientiousness') {
+      } else if (emotion === 'disgust' || emotion === 'conscientiousness' || emotion === 'tentative') {
         return 1;
       } else if (emotion === 'fear' || emotion === 'extraversion')  {
         return 2;
       } else if (emotion === 'sadness' || emotion === 'agreeableness') {
         return 3;
-      } else if (emotion === 'joy' || emotion ==='range') {
+      } else if (emotion === 'joy' || emotion ==='range' || emotion === 'confident') {
         return 4;
       }
     }

@@ -48,13 +48,38 @@ app.get('/check', (req, res) => {
 });
 
 app.get('/logout', (req, res) => {
-  req.session.destroy()
-  res.send('logged out!')
-})
+  req.session.destroy();
+  res.send('logged out!');
+});
+
+app.get('/toptracks', (req, res) => spotifyHelpers.getID(req.query.query)
+  .then(result =>
+    // console.log('RESULT IS', result.artists.items[0].id);
+     spotifyHelpers.getTopTracks(result.artists.items[0].id))
+  .then((data) => {
+    // console.log('RESULT IS', results);
+    res.end(JSON.stringify(data));
+  }));
+
+// app.get('/toptracks', (req, res) => {
+//   return spotifyHelpers.getID(req.query.query)
+//   .then(result => {
+//     console.log('RESULT IS', result.artists.items[0].id)
+//     return spotifyHelpers.getTopTracks(result.artists.items[0].id)
+//   })
+//   .then((data) => {
+//     // console.log('RESULT IS', results);
+//     res.end(JSON.stringify(data));
+//   })
+// })
+
+
+// working zone
 
 app.post('/search', (req, res) => {
   return mmHelpers.searchByTitleAndArtist(req.body.title, req.body.artist)
   .then(data => {
+    // console.log('SEARCH DATA', data.track_list )
     if (data.track_list.length === 0) { res.send({errorMessage: 'No Search Results'}); }
     res.send(data);
   })
@@ -72,14 +97,17 @@ app.post('/fetchLyricsByTrackId', (req, res) => {
 
 app.post('/process', (req, res) => {
   const input = req.body;
+  console.log('IN PROCESS SERVER', input)
   const songNameAndArtist = [input.artist_name, input.track_name];
   let watsonData = {};
-
-  return mmHelpers.getLyricsByTrackId(input.track_id)
+  // breaks here on top 10
+  // return mmHelpers.getLyricsByTrackId(input.track_id)
+  return mmHelpers.getLyricsByTitleAndArtist(input.track_name, input.artist_name)
   .then((data) => {
+    console.log('DATA IN PROCESS SERVER', data)
     const lyrics = data.lyrics.lyrics_body;
     input.lyrics = lyrics.slice(0, (lyrics.indexOf('*******')));
-    return;
+    // return;
   })
   .then(() => watsonHelpers.getSongData(input.lyrics))
   .then((data) => {
@@ -117,8 +145,12 @@ app.post('/process', (req, res) => {
   .then((spotifyData) => {
     input.spotify_uri = spotifyData.uri;
     input.spotify_albumArt = spotifyData.albumArt;
+    input.artist_id = spotifyData.artist_id;
+
+    console.log('spotifydata is', input);
 
     const songEntry = new db.Song(input);
+    console.log('songEntry is', songEntry)
     songEntry.save(err => {
       if (err) { console.log("SAVE SONG ERROR"); }
     })

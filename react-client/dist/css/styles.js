@@ -44,7 +44,6 @@ const styles = {
     width: '55%',    
     margin: '0 auto',
     textAlign: 'left'
-
   },
   cardStyle: {
     display: 'table',
@@ -55,6 +54,10 @@ const styles = {
     display: 'table',
     width: '33%',    
     margin: '2% auto' 
+  },
+  angry: {
+    backgroundColor:'#fc3d39',
+    color:'white',
   }
 };
 

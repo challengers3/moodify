@@ -1,21 +1,24 @@
 import React from 'react';
+import styles from '../../dist/css/styles';
 
 class Line extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      style: 'noTone'
+    };
   }
 
-  songTones () {
-
+  componentWillMount() {
+    this.setState({
+      style: this.props.style
+    })
   }
 
   render() {
     let tones = [];
 
-
-
-    return (<pre>{this.props.line.text}</pre>)
+    return (<pre style={styles[this.state.style]}>{this.props.line.text}</pre>)
   }
 
 }

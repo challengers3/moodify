@@ -81,7 +81,7 @@ app.post('/process', (req, res) => {
     input.lyrics = lyrics.slice(0, (lyrics.indexOf('*******')));
     return;
   })
-  .then(() => watsonHelpers.queryWatson(input.lyrics))
+  .then(() => watsonHelpers.getSongData(input.lyrics))
   .then((data) => {
     watsonData = {
       lyrics: data.lyrics,
@@ -124,7 +124,7 @@ app.post('/process', (req, res) => {
     })
   })
   .then(() => {
-    res.json([songNameAndArtist, input.lyrics, watsonData, input.spotify_uri, input.spotify_albumArt, watsonData.lyrics]);
+    res.json([songNameAndArtist, watsonData.lyrics, watsonData, input.spotify_uri, input.spotify_albumArt]);
   })
   .catch((error) => {
     console.log('/PROCESS ERROR: ', error);

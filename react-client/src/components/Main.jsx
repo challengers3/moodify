@@ -122,11 +122,10 @@ class Main extends React.Component {
       const data = res.data;
       this.setState({
         currentSongNameAndArtist: data[0],
-        currentLyrics: data[1],
+        watsonLyrics: data[1],
         watson: data[2],
         spotifyURI: data[3],
         spotifyAlbumArt: data[4],
-        watsonLyrics: data[5],
         spotifyLoading: false,
         lyricsLoading: false,
         showLyrics: true,
@@ -213,7 +212,6 @@ class Main extends React.Component {
               spotifyURI={this.state.spotifyURI}
               spotifyAlbumArt={this.state.spotifyAlbumArt}
               loading={this.state.spotifyLoading}
-              lyrics={this.state.currentLyrics}
               loading={this.state.lyricsLoading}
               songNameAndArtist={this.state.currentSongNameAndArtist}
               watson={this.state.watson}

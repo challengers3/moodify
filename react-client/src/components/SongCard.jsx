@@ -6,6 +6,11 @@ import FlatButton from 'material-ui/FlatButton';
 import styles from '../../dist/css/styles';
 import CircularProgress from 'material-ui/CircularProgress';
 import Lyrics from './Lyrics.jsx'
+import Drawer from 'material-ui/Drawer';
+import MenuItem from 'material-ui/MenuItem';
+import RaisedButton from 'material-ui/RaisedButton';
+import Divider from 'material-ui/Divider';
+import Dialog from 'material-ui/Dialog';
 
 class SongCard extends React.Component {
   constructor(props) {
@@ -15,23 +20,35 @@ class SongCard extends React.Component {
       artist: ' ',
       tone: ' ',
       expanded: false,
+      open: false,
+      dialogOpen: false,
     };
     this.handleExpandChange = this.handleExpandChange.bind(this);
     this.handleEmotionToggle = this.handleEmotionToggle.bind(this);
     this.handleSocialToggle = this.handleSocialToggle.bind(this);
     this.handleLanguageToggle = this.handleLanguageToggle.bind(this);
+    this.handleDrawerToggle = this.handleDrawerToggle.bind(this);
+    this.handleDialogToggle = this.handleDialogToggle.bind(this);
   }
 
   handleExpandChange(expanded) {
     this.setState({expanded: this.state.expanded});
   };
 
+  handleDrawerToggle() {
+    this.setState({open: !this.state.open});
+  }
+
+  handleDialogToggle() {
+    this.setState({dialogOpen: !this.state.dialogOpen});
+  }
+
   handleEmotionToggle(event) {
     if (this.state.expanded && this.state.tone !== 'emotion') {
       this.setState({tone: 'emotion'});
     } else {
       this.setState({tone: 'emotion'});
-      this.setState({expanded: !this.state.expanded});
+      this.handleDialogToggle();
     }
   };
 
@@ -40,7 +57,7 @@ class SongCard extends React.Component {
       this.setState({tone: 'social'});
     } else {
       this.setState({tone: 'social'});
-      this.setState({expanded: !this.state.expanded});
+      this.handleDialogToggle();    
     }
   };
 
@@ -49,45 +66,73 @@ class SongCard extends React.Component {
       this.setState({tone: 'language'});
     } else {
       this.setState({tone: 'language'});
-      this.setState({expanded: !this.state.expanded});
+      this.handleDialogToggle();    
     }
   };
 
-  componentDidMount(){
-      this.setState({tone: 'language'});
-      this.setState({expanded: !this.state.expanded});
-      console.log('watson lyrics: ', this.props.watsonLyrics)
-  }
-
-
   render() {
+    const actions = [
+      <FlatButton
+        label="Okay"
+        primary={true}
+        onTouchTap={this.handleDialogToggle}
+      />
+    ];
+
     if (this.props.loading) {
       return (
           <CircularProgress style={styles.loading} />
       );
     } else {
       return (
-        <Card style={styles.cardStyle} expanded={this.state.expanded} onExpandChange={this.handleExpandChange}>
-          <CardMedia
-            overlay={<CardTitle title={this.props.songNameAndArtist[0] + ' - ' + this.props.songNameAndArtist[1]}/>}
-          >
-            <img src={this.props.spotifyAlbumArt} style={styles.img}/>
-          </CardMedia>
-          <CardText>
-            {this.props.showPlayer ?
-            <Player spotifyURI={this.props.spotifyURI} loading={this.props.loading}/>
-          : null }
-            <Lyrics watsonLyrics={this.props.watsonLyrics} />
-          </CardText>
-          <CardText expandable={true}>
+        <div>
+          <Drawer open={this.state.open}>
+            <MenuItem style={{fontWeight: 'bold'}} onTouchTap={this.handleEmotionToggle}>Emotion</MenuItem>
+            <MenuItem>Anger</MenuItem>
+            <MenuItem>Disgust</MenuItem>
+            <MenuItem>Fear</MenuItem>
+            <MenuItem>Sadness</MenuItem>
+            <MenuItem>Joy</MenuItem>
+            <Divider />
+            <MenuItem style={{fontWeight: 'bold'}} onTouchTap={this.handleSocialToggle}>Social</MenuItem>
+            <MenuItem>Openness</MenuItem>
+            <MenuItem>Conscientiousness</MenuItem>
+            <MenuItem>Extraversion</MenuItem>
+            <MenuItem>Agreeableness</MenuItem>
+            <MenuItem>Emotional Range</MenuItem>
+            <Divider />
+            <MenuItem style={{fontWeight: 'bold'}}  onTouchTap={this.handleLanguageToggle}>Language</MenuItem>
+            <MenuItem>Analytical</MenuItem>
+            <MenuItem>Confident</MenuItem>
+            <MenuItem>Tentative</MenuItem>
+          </Drawer>
+
+          <Card style={styles.cardStyle} expanded={this.state.expanded} onExpandChange={this.handleExpandChange}>
+            <CardMedia
+              overlay={<CardTitle title={this.props.songNameAndArtist[0] + ' - ' + this.props.songNameAndArtist[1]}/>}
+            >
+              <img src={this.props.spotifyAlbumArt} style={styles.img}/>
+            </CardMedia>
+            
+            <CardText>
+              {this.props.showPlayer ?
+              <Player spotifyURI={this.props.spotifyURI} loading={this.props.loading}/>
+            : null }
+              <Lyrics watsonLyrics={this.props.watsonLyrics} />
+            </CardText>
+
+            <Dialog
+              actions={actions}
+              open={this.state.dialogOpen}
+              onRequestClose={this.handleClose}
+            >
             <Mood watson={this.props.watson} tone={this.state.tone}/>
-          </CardText>
-          <CardActions>
-            <FlatButton label="Language Analysis" onTouchTap={this.handleLanguageToggle} />
-            <FlatButton label="Emotion Analysis" onTouchTap={this.handleEmotionToggle} />
-            <FlatButton label="Social Analysis" onTouchTap={this.handleSocialToggle} />
-          </CardActions>
-        </Card>
+
+            </Dialog>
+            
+            <RaisedButton label="Tone Data" onTouchTap={this.handleDrawerToggle} />
+          </Card>
+        </div>
       );
     }
   }

@@ -22,7 +22,8 @@ const getSongData = (songString) => {
     let socialTone = data.document_tone.tone_categories[2];
 
     return {
-      song: songString,
+      // Lyrical analysis
+      lyrics: data.sentences_tone,
 
       // Emotion Tone
       anger: emotionalTone.tones[0].score,
@@ -51,28 +52,28 @@ const getSongData = (songString) => {
   });
 };
 
-const getLyricsData = (songString) => {
-  let songByLines = songString.split('\n')
-  let params = { utterances : [] };
+// const getLyricsData = (songString) => {
+//   let songByLines = songString.split('\n')
+//   let params = { utterances : [] };
 
-  for (let i = 0; i < songByLines.length; i++) {
-    params.utterances.push( {text: songByLines[i]} )
-  }
+//   for (let i = 0; i < songByLines.length; i++) {
+//     params.utterances.push( {text: songByLines[i]} )
+//   }
 
-  return tone_analyzer.tone_chatAsync(params)
-  .then ( data => data )
-  .catch(err => {
-    console.log("getLyricsData error: ", err);
-    return err;
-  });
-};
+//   return tone_analyzer.tone_chatAsync(params)
+//   .then ( data => data )
+//   .catch(err => {
+//     console.log("getLyricsData error: ", err);
+//     return err;
+//   });
+// };
 
-const queryWatson = (songString) => {
-  return Promise.all([getSongData(songString), getLyricsData(songString)])
-  .spread((songData, lyricsData) => { 
-    songData.lyrics = lyricsData; 
-    return songData;
-  });
-};
+// const queryWatson = (songString) => {
+//   return Promise.all([getSongData(songString), getLyricsData(songString)])
+//   .spread((songData, lyricsData) => { 
+//     songData.lyrics = lyricsData; 
+//     return songData;
+//   });
+// };
 
-module.exports.queryWatson = queryWatson;
+module.exports.getSongData = getSongData;

@@ -6,8 +6,16 @@ class Line extends React.Component {
     this.state = {};
   }
 
+  songTones () {
+
+  }
+
   render() {
-    return <pre>{this.props.line.utterance_text}</pre>
+    let tones = [];
+
+
+
+    return (<pre>{this.props.line.text}</pre>)
   }
 
 }

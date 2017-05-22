@@ -92,7 +92,12 @@ class SongCard extends React.Component {
     } else {
       return (
         <div>
-          <Drawer open={this.state.open}>
+          <Drawer 
+            open={this.state.open}
+            docked={false}
+            onRequestChange={(open) => this.setState({open})}
+            overlayStyle={{backgroundColor: 'transparent'}}
+          >
             <MenuItem style={{fontWeight: 'bold'}} onTouchTap={this.handleEmotionToggle}>Emotion</MenuItem>
             <MenuItem>Anger</MenuItem>
             <MenuItem>Disgust</MenuItem>
@@ -130,7 +135,7 @@ class SongCard extends React.Component {
             <Dialog
               actions={actions}
               open={this.state.dialogOpen}
-              onRequestClose={this.handleClose}
+              onRequestClose={this.handleDialogToggle}
             >
               <Mood watson={this.props.watson} tone={this.state.tone} />
 

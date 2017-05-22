@@ -43,8 +43,7 @@ const styles = {
     display: 'table',
     width: '55%',
     margin: '0 auto',
-    textAlign: 'left',
-
+    textAlign: 'left'
   },
   cardStyle: {
     display: 'table',

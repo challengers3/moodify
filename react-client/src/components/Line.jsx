@@ -5,22 +5,13 @@ class Line extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      style: 'noTone'
+      tone: ' ',
     };
   }
 
-  componentWillMount() {
-    this.setState({
-      style: this.props.style
-    })
-  }
-
   render() {
-    let tones = [];
-
-    return (<pre style={styles[this.state.style]}>{this.props.line.text}</pre>)
+    return (<pre style={styles[this.props.tone]}>{this.props.line.text}</pre>);
   }
-
 }
 
 export default Line;

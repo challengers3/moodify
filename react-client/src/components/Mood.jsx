@@ -191,7 +191,7 @@ componentWillReceiveProps(props) {
   })
 }
   render() {   
-    if (this.props.tone === 'language') {
+    if (this.props.category === 'language') {
       return (
         <div className="language">
           <h3>Language</h3>
@@ -199,7 +199,7 @@ componentWillReceiveProps(props) {
           <pre>courtesy of IBM Watson</pre>
         </div>
       )
-    } else if(this.props.tone === 'emotion') {
+    } else if(this.props.category === 'emotion') {
       return (
         <div className="emotion">
           <h3>Emotion</h3>
@@ -207,7 +207,7 @@ componentWillReceiveProps(props) {
           <pre>courtesy of IBM Watson</pre>
         </div>
       )
-    } else if (this.props.tone === 'social') {
+    } else if (this.props.category === 'social') {
       return (
         <div className="social">
           <h3>Social</h3>

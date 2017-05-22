@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import Router from './Router';
 import Header from '../components/Header';
 
@@ -7,17 +8,18 @@ class App extends React.Component {
     super(props);
     this.state = {
       login: false,
-      main: false,
+      signup: false,
     };
     this.toLogin = this.toLogin.bind(this);
   }
 
   toLogin() {
-    console.log('STATE FOR BAR', this.state.login)
+    console.log('STATE FOR TOLOGIN', this.state.login)
     this.setState({
       login: !this.state.login,
     })
   }
+
 
   render() {
     return (
@@ -26,6 +28,7 @@ class App extends React.Component {
           {...this.state}
           toLogin={this.toLogin}
         />
+        {/* not sure what this does */}
         {this.props.children}
         <Router
           toLogin={this.toLogin}

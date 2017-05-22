@@ -5,16 +5,19 @@ import LoginSignup from './LoginSignup';
 import Main from './Main';
 import Signup from './Signup';
 
-const Router = (props) => (
+const Router = props => (
   <Switch>
     <Route
       exact path="/"
-      component={Main}
-    />
+    ><Main
+      toLogin={props.toLogin}
+    /></Route>
     <Route
       path="/loginSignup"
       // component={LoginSignup}
-    ><LoginSignup toLogin={props.toLogin}/></Route>
+    ><LoginSignup
+      toLogin={props.toLogin}
+    /></Route>
     <Route
       path="/signup"
       component={Signup}

@@ -30,22 +30,22 @@ let sess = {};
 app.post('/signup', auth.createUser, (req, res) => {
   sess = req.session;
   sess.username = req.body.username;
-  res.send({statusCode: 200});
+  res.send({ statusCode: 200 });
 });
 
 app.post('/login', auth.verifyUser, (req, res) => {
   sess = req.session;
   sess.username = req.body.username;
-  res.send({statusCode: 200});
+  res.send({ statusCode: 200 });
 });
 
 app.get('/check', (req, res) => {
   if (req.session.username) {
-    res.send({statusCode: 200});
+    res.send({ statusCode: 200 });
   } else {
-    res.send({statusCode: 404});
+    res.send({ statusCode: 404 });
   }
-})
+});
 
 app.get('/logout', (req, res) => {
   req.session.destroy()

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Polar, Doughnut, Bar} from 'react-chartjs-2';
+import { Polar, Doughnut, Bar } from 'react-chartjs-2';
 import data from '../../../sampleWatsonData.js';
 
 class Mood extends React.Component {
@@ -7,215 +7,215 @@ class Mood extends React.Component {
     super(props);
     this.state = {
       emotionData: {
-        labels: ["Anger", "Joy", "Disgust", "Sadness", "Fear"],
+        labels: ['Anger', 'Joy', 'Disgust', 'Sadness', 'Fear'],
         datasets: [{
-            data: [
+          data: [
               props.watson.anger,
               props.watson.joy,
               props.watson.disgust,
               props.watson.fear,
-              props.watson.sadness
-              ],
-            backgroundColor: [
-                'rgba(252, 61, 57, 1)',
-                'rgba(254, 203, 46, 1)',
-                'rgba(83, 215, 105, 1)',
-                'rgba(20, 126, 251, 1)',
-                'rgba(193, 53, 132, 1)',
+              props.watson.sadness,
             ],
-            borderColor: [
-                'rgba(252, 61, 57, 1)',
-                'rgba(254, 203, 46, 1)',
-                'rgba(83, 215, 105, 1)',
-                'rgba(20, 126, 251, 1)',
-                'rgba(193, 53, 132, 1)',
+          backgroundColor: [
+              'rgba(252, 61, 57, 1)',
+              'rgba(254, 203, 46, 1)',
+              'rgba(83, 215, 105, 1)',
+              'rgba(20, 126, 251, 1)',
+              'rgba(193, 53, 132, 1)',
             ],
-            borderWidth: 3
-        }]
+          borderColor: [
+              'rgba(252, 61, 57, 1)',
+              'rgba(254, 203, 46, 1)',
+              'rgba(83, 215, 105, 1)',
+              'rgba(20, 126, 251, 1)',
+              'rgba(193, 53, 132, 1)',
+            ],
+          borderWidth: 3,
+        }],
       },
       emotionOptions: {
         title: {
           display: false,
-          fontSize: 24
+          fontSize: 24,
         },
       },
       languageData: {
-        labels: ["Analytical", "Confident", "Tentative"],
+        labels: ['Analytical', 'Confident', 'Tentative'],
         datasets: [{
-            data: [props.watson.analytical, props.watson.confident, props.watson.tentative, ],
-            backgroundColor: [
-                'rgba(252, 61, 57, 1)',
-                'rgba(254, 203, 46, 1)',
-                'rgba(83, 215, 105, 1)'
+          data: [props.watson.analytical, props.watson.confident, props.watson.tentative],
+          backgroundColor: [
+              'rgba(252, 61, 57, 1)',
+              'rgba(254, 203, 46, 1)',
+              'rgba(83, 215, 105, 1)',
             ],
-            borderColor: [
-                'rgba(252, 61, 57, 1)',
-                'rgba(254, 203, 46, 1)',
-                'rgba(83, 215, 105, 1)'
+          borderColor: [
+              'rgba(252, 61, 57, 1)',
+              'rgba(254, 203, 46, 1)',
+              'rgba(83, 215, 105, 1)',
             ],
-            borderWidth: 3
-        }]
+          borderWidth: 3,
+        }],
       },
       languageOptions: {
         title: {
           display: false,
-          fontSize: 24
-        }
+          fontSize: 24,
+        },
       },
       socialData: {
-        labels: ["Openness", "Conscientiousness", "Extraversion", "Agreeableness", "Emotional Range"],
+        labels: ['Openness', 'Conscientiousness', 'Extraversion', 'Agreeableness', 'Emotional Range'],
         datasets: [{
-            data: [
+          data: [
               props.watson.openness,
               props.watson.conscientiousness,
               props.watson.extraversion,
               props.watson.agreeableness,
-              props.watson.emotionalrange
-              ],
-            backgroundColor: [
-                'rgba(252, 61, 57, 1)',
-                'rgba(254, 203, 46, 1)',
-                'rgba(83, 215, 105, 1)',
-                'rgba(20, 126, 251, 1)',
-                'rgba(193, 53, 132, 1)',
+              props.watson.emotionalrange,
             ],
-            borderColor: [
-                'rgba(252, 61, 57, 1)',
-                'rgba(254, 203, 46, 1)',
-                'rgba(83, 215, 105, 1)',
-                'rgba(20, 126, 251, 1)',
-                'rgba(193, 53, 132, 1)',
+          backgroundColor: [
+              'rgba(252, 61, 57, 1)',
+              'rgba(254, 203, 46, 1)',
+              'rgba(83, 215, 105, 1)',
+              'rgba(20, 126, 251, 1)',
+              'rgba(193, 53, 132, 1)',
             ],
-            borderWidth: 3
-        }]
+          borderColor: [
+              'rgba(252, 61, 57, 1)',
+              'rgba(254, 203, 46, 1)',
+              'rgba(83, 215, 105, 1)',
+              'rgba(20, 126, 251, 1)',
+              'rgba(193, 53, 132, 1)',
+            ],
+          borderWidth: 3,
+        }],
       },
       socialOptions: {
         title: {
           display: false,
-          fontSize: 24
-        }
+          fontSize: 24,
+        },
       },
     };
   }
-componentWillReceiveProps(props) {
+  componentWillReceiveProps(props) {
   this.setState({
-      emotionData: {
-        labels: ["Anger", "Joy", "Disgust", "Sadness", "Fear"],
+    emotionData: {
+        labels: ['Anger', 'Joy', 'Disgust', 'Sadness', 'Fear'],
         datasets: [{
-            data: [
+          data: [
               props.watson.anger,
               props.watson.joy,
               props.watson.disgust,
               props.watson.fear,
-              props.watson.sadness
-              ],
-            backgroundColor: [
-                'rgba(252, 61, 57, 1)',
-                'rgba(254, 203, 46, 1)',
-                'rgba(83, 215, 105, 1)',
-                'rgba(20, 126, 251, 1)',
-                'rgba(193, 53, 132, 1)',
+              props.watson.sadness,
             ],
-            borderColor: [
-                'rgba(252, 61, 57, 1)',
-                'rgba(254, 203, 46, 1)',
-                'rgba(83, 215, 105, 1)',
-                'rgba(20, 126, 251, 1)',
-                'rgba(193, 53, 132, 1)',
+          backgroundColor: [
+              'rgba(252, 61, 57, 1)',
+              'rgba(254, 203, 46, 1)',
+              'rgba(83, 215, 105, 1)',
+              'rgba(20, 126, 251, 1)',
+              'rgba(193, 53, 132, 1)',
             ],
-            borderWidth: 3
-        }]
+          borderColor: [
+              'rgba(252, 61, 57, 1)',
+              'rgba(254, 203, 46, 1)',
+              'rgba(83, 215, 105, 1)',
+              'rgba(20, 126, 251, 1)',
+              'rgba(193, 53, 132, 1)',
+            ],
+          borderWidth: 3,
+        }],
       },
-      emotionOptions: {
+    emotionOptions: {
         title: {
           display: false,
-          fontSize: 24
+          fontSize: 24,
         },
       },
-      languageData: {
+    languageData: {
         datasets: [{
-            labels: ["Analytical", "Confident", "Tentative"],
-            data: [props.watson.analytical, props.watson.confident, props.watson.tentative],
-            backgroundColor: [
-                'rgba(252, 61, 57, 1)',
-                'rgba(254, 203, 46, 1)',
-                'rgba(83, 215, 105, 1)',
+          labels: ['Analytical', 'Confident', 'Tentative'],
+          data: [props.watson.analytical, props.watson.confident, props.watson.tentative],
+          backgroundColor: [
+              'rgba(252, 61, 57, 1)',
+              'rgba(254, 203, 46, 1)',
+              'rgba(83, 215, 105, 1)',
             ],
-            borderColor: [
-                'rgba(252, 61, 57, 1)',
-                'rgba(254, 203, 46, 1)',
-                'rgba(83, 215, 105, 1)',
+          borderColor: [
+              'rgba(252, 61, 57, 1)',
+              'rgba(254, 203, 46, 1)',
+              'rgba(83, 215, 105, 1)',
             ],
-            borderWidth: 3
-        }]
+          borderWidth: 3,
+        }],
       },
-      languageOptions: {
+    languageOptions: {
         title: {
           display: false,
-          fontSize: 24
-        }
+          fontSize: 24,
+        },
       },
-      socialData: {
-        labels: ["Openness", "Conscientiousness", "Extraversion", "Agreeableness", "Emotional Range"],
+    socialData: {
+        labels: ['Openness', 'Conscientiousness', 'Extraversion', 'Agreeableness', 'Emotional Range'],
         datasets: [{
-            data: [
+          data: [
               props.watson.openness,
               props.watson.conscientiousness,
               props.watson.extraversion,
               props.watson.agreeableness,
-              props.watson.emotionalrange
-              ],
-            backgroundColor: [
-                'rgba(252, 61, 57, 1)',
-                'rgba(254, 203, 46, 1)',
-                'rgba(83, 215, 105, 1)',
-                'rgba(20, 126, 251, 1)',
-                'rgba(193, 53, 132, 1)',
+              props.watson.emotionalrange,
             ],
-            borderColor: [
-                'rgba(252, 61, 57, 1)',
-                'rgba(254, 203, 46, 1)',
-                'rgba(83, 215, 105, 1)',
-                'rgba(20, 126, 251, 1)',
-                'rgba(193, 53, 132, 1)',
+          backgroundColor: [
+              'rgba(252, 61, 57, 1)',
+              'rgba(254, 203, 46, 1)',
+              'rgba(83, 215, 105, 1)',
+              'rgba(20, 126, 251, 1)',
+              'rgba(193, 53, 132, 1)',
             ],
-            borderWidth: 3
-        }]
+          borderColor: [
+              'rgba(252, 61, 57, 1)',
+              'rgba(254, 203, 46, 1)',
+              'rgba(83, 215, 105, 1)',
+              'rgba(20, 126, 251, 1)',
+              'rgba(193, 53, 132, 1)',
+            ],
+          borderWidth: 3,
+        }],
       },
-      socialOptions: {
+    socialOptions: {
         title: {
           display: false,
-          fontSize: 24
-        }
-      }
-  })
+          fontSize: 24,
+        },
+      },
+  });
 }
-  render() {   
+  render() {
     if (this.props.category === 'language') {
       return (
         <div className="language">
           <h3>Language</h3>
-          <Doughnut data={this.state.languageData} options={this.state.languageOptions} width={600}/>
+          <Doughnut data={this.state.languageData} options={this.state.languageOptions} width={600} />
           <pre>courtesy of IBM Watson</pre>
         </div>
-      )
-    } else if(this.props.category === 'emotion') {
+      );
+    } else if (this.props.category === 'emotion') {
       return (
         <div className="emotion">
           <h3>Emotion</h3>
-          <Doughnut data={this.state.emotionData} options={this.state.emotionOptions} width={600}/>
+          <Doughnut data={this.state.emotionData} options={this.state.emotionOptions} width={600} />
           <pre>courtesy of IBM Watson</pre>
         </div>
-      )
+      );
     } else if (this.props.category === 'social') {
       return (
         <div className="social">
           <h3>Social</h3>
-          <Doughnut data={this.state.socialData} options={this.state.socialOptions} width={600}/>
+          <Doughnut data={this.state.socialData} options={this.state.socialOptions} width={600} />
           <pre>courtesy of IBM Watson</pre>
         </div>
-      )
-    } 
+      );
+    }
   }
 }
 

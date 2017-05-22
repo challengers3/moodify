@@ -12,7 +12,6 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Divider from 'material-ui/Divider';
 import Dialog from 'material-ui/Dialog';
 
-
 class SongCard extends React.Component {
   constructor(props) {
     super(props);
@@ -30,6 +29,7 @@ class SongCard extends React.Component {
     this.handleLanguageToggle = this.handleLanguageToggle.bind(this);
     this.handleDrawerToggle = this.handleDrawerToggle.bind(this);
     this.handleDialogToggle = this.handleDialogToggle.bind(this);
+    this.handleTopTrack = this.handleTopTrack.bind(this);
   }
 
   handleExpandChange(expanded) {
@@ -69,7 +69,12 @@ class SongCard extends React.Component {
       this.setState({tone: 'language'});
       this.handleDialogToggle();
     }
-  };
+  }
+
+  handleTopTrack() {
+    console.log('NAME ISSSSS', this.props.songNameAndArtist[0])
+    this.props.getTopByArtist(this.props.songNameAndArtist[0]);
+  }
 
   render() {
     const actions = [
@@ -82,7 +87,7 @@ class SongCard extends React.Component {
 
     if (this.props.loading) {
       return (
-          <CircularProgress style={styles.loading} />
+        <CircularProgress style={styles.loading} />
       );
     } else {
       return (
@@ -127,11 +132,19 @@ class SongCard extends React.Component {
               open={this.state.dialogOpen}
               onRequestClose={this.handleClose}
             >
-            <Mood watson={this.props.watson} tone={this.state.tone}/>
+              <Mood watson={this.props.watson} tone={this.state.tone} />
 
             </Dialog>
-
-            <RaisedButton label="Tone Data" onTouchTap={this.handleDrawerToggle} />
+            <RaisedButton
+              style={styles.tone}
+              label="Tone Data"
+              onTouchTap={this.handleDrawerToggle}
+            />
+            <RaisedButton
+              style={styles.top}
+              label="Top Ten Tracks"
+              onTouchTap={this.handleTopTrack}
+            />
           </Card>
         </div>
 // =======

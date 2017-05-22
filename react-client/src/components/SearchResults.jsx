@@ -36,7 +36,8 @@ class SearchResults extends React.Component {
                 key={i}
               ><div
                 value={i} onClick={this.handleClick}
-              >{trackObj.track.track_name} - {trackObj.track.artist_name}</div></ListItem>
+              >{trackObj.track.track_name} - {trackObj.track.artist_name}</div>
+              </ListItem>
                 ))}
           </List>
         </Paper>

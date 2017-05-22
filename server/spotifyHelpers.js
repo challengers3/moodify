@@ -17,6 +17,13 @@ const getSongByTitleAndArtist = (title, artist) => {
   .catch((err) => { console.log(err); });
 };
 
+// https://api.spotify.com/v1/search?q=Daft+Punk&type=artist
+
+const getID = name => request.getAsync(`${rootURL}search?q=${name}&type=artist`)
+  .then((data) => {
+    const retData = JSON.parse(data.body);
+    return retData;
+  }).catch(err => console.log(err));
 
 const getTopTracks = id => request.getAsync(`${rootURL}artists/${id}/top-tracks?country=us`)
   .then((data) => {
@@ -40,3 +47,4 @@ const getTopTracks = id => request.getAsync(`${rootURL}artists/${id}/top-tracks?
 
 module.exports.getSongByTitleAndArtist = getSongByTitleAndArtist;
 module.exports.getTopTracks = getTopTracks;
+module.exports.getID = getID;

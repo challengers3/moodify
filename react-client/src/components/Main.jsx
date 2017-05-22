@@ -94,12 +94,13 @@ class Main extends React.Component {
       if (!res.data) {
         console.log('error');
       }
-      console.log('SEARCH RES IS', res.data)
+      console.log('SEARCH DATA', res.data)
       this.setState({ searchResults: res.data, searchResultsLoading: false });
     });
   }
 
   process(trackObj) {
+    console.log('in process method')
     this.setState({
       showPlayer: true,
       spotifyLoading: true,
@@ -186,8 +187,9 @@ class Main extends React.Component {
     }).catch(err => console.log(err));
   }
 
-  getTopByArtist(id) {
-    console.log('get top by artist')
+  getTopByArtist(name) {
+    // const newId = JSON.stringify(id);
+    console.log('get top by artist', name)
     this.setState({
       showResults: true,
       searchResultsLoading: true,
@@ -195,11 +197,24 @@ class Main extends React.Component {
       upDown: false,
       showPlayer: false,
     });
-    axios.get(`/toptracks?query=${id}`)
+    axios.get(`/toptracks?query=${name}`)
     .then((res) => {
-      console.log('RES from main', res)
-      // this.setState({ searchResults: res.data, searchResultsLoading: false });
-    })
+      // console.log('RES IS ', res)
+      const track_list = res.data.tracks.map((one) => {
+        const oneTrack = {};
+        oneTrack.track = {
+          artist_name: name,
+          track_name: one.name,
+        };
+        return oneTrack;
+      });
+      const data = { track_list };
+      console.log('TRACK_LIST ARRAY', data)
+      this.setState({
+        searchResults: data,
+        searchResultsLoading: false,
+      });
+    });
   }
 
   render() {

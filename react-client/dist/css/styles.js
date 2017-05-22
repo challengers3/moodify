@@ -24,41 +24,43 @@ const styles = {
     borderColor: '#BDBDBD',
   },
   container: {
-    position: 'absolute', 
-    width:'100%', 
-    textAlign: 'center'
+    position: 'absolute',
+    width: '100%',
+    textAlign: 'center',
   },
   search: {
     width: '50%',
-    margin: '2% auto 2%'
+    margin: '2% auto 2%',
   },
   loading: {
     margin: '0 auto',
     size: 160,
     thickness: 7,
     width: '100%',
-    margin: '10% auto'
+    margin: '10% auto',
   },
   searchResults: {
     display: 'table',
-    width: '55%',    
+    width: '55%',
     margin: '0 auto',
     textAlign: 'left'
   },
   cardStyle: {
     display: 'table',
-    width: '55%',    
-    margin: '0 auto' 
+    width: '55%',
+    margin: '0 auto',
   },
   login: {
     display: 'table',
-    width: '33%',    
-    margin: '2% auto' 
+    width: '33%',
+    margin: '2% auto',
   },
-  angry: {
-    backgroundColor:'#fc3d39',
-    color:'white',
-  }
+  tone: {
+    float: 'left',
+  },
+  top: {
+    float: 'right',
+  },
 };
 
 export default styles;

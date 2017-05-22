@@ -1,11 +1,11 @@
 import React from 'react';
-import Player from './Player.jsx';
-import Mood from './Mood.jsx';
+import Player from './Player';
+import Mood from './Mood';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 import styles from '../../dist/css/styles';
 import CircularProgress from 'material-ui/CircularProgress';
-import Lyrics from './Lyrics.jsx'
+import Lyrics from './Lyrics';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -29,6 +29,7 @@ class SongCard extends React.Component {
     this.handleLanguageToggle = this.handleLanguageToggle.bind(this);
     this.handleDrawerToggle = this.handleDrawerToggle.bind(this);
     this.handleDialogToggle = this.handleDialogToggle.bind(this);
+    this.handleTopTrack = this.handleTopTrack.bind(this);
   }
 
   handleExpandChange(expanded) {
@@ -57,7 +58,7 @@ class SongCard extends React.Component {
       this.setState({tone: 'social'});
     } else {
       this.setState({tone: 'social'});
-      this.handleDialogToggle();    
+      this.handleDialogToggle();
     }
   };
 
@@ -66,9 +67,14 @@ class SongCard extends React.Component {
       this.setState({tone: 'language'});
     } else {
       this.setState({tone: 'language'});
-      this.handleDialogToggle();    
+      this.handleDialogToggle();
     }
-  };
+  }
+
+  handleTopTrack() {
+    console.log('NAME ISSSSS', this.props.songNameAndArtist[0])
+    this.props.getTopByArtist(this.props.songNameAndArtist[0]);
+  }
 
   render() {
     const actions = [
@@ -81,7 +87,7 @@ class SongCard extends React.Component {
 
     if (this.props.loading) {
       return (
-          <CircularProgress style={styles.loading} />
+        <CircularProgress style={styles.loading} />
       );
     } else {
       return (
@@ -118,7 +124,7 @@ class SongCard extends React.Component {
             >
               <img src={this.props.spotifyAlbumArt} style={styles.img}/>
             </CardMedia>
-            
+
             <CardText>
               {this.props.showPlayer ?
               <Player spotifyURI={this.props.spotifyURI} loading={this.props.loading}/>
@@ -131,13 +137,31 @@ class SongCard extends React.Component {
               open={this.state.dialogOpen}
               onRequestClose={this.handleDialogToggle}
             >
-            <Mood watson={this.props.watson} tone={this.state.tone}/>
+              <Mood watson={this.props.watson} tone={this.state.tone} />
 
             </Dialog>
-            
-            <RaisedButton label="Tone Data" onTouchTap={this.handleDrawerToggle} />
+            <RaisedButton
+              style={styles.tone}
+              label="Tone Data"
+              onTouchTap={this.handleDrawerToggle}
+            />
+            <RaisedButton
+              style={styles.top}
+              label="Top Ten Tracks"
+              onTouchTap={this.handleTopTrack}
+            />
           </Card>
         </div>
+// =======
+        //   </CardText>
+        //   <CardActions>
+        //     <FlatButton label="Language Analysis" onTouchTap={this.handleLanguageToggle} />
+        //     <FlatButton label="Emotion Analysis" onTouchTap={this.handleEmotionToggle} />
+        //     <FlatButton label="Social Analysis" onTouchTap={this.handleSocialToggle} />
+        //     <FlatButton label="Top Ten Tracks" onTouchTap={this.props.getTopByArtist} />
+        //   </CardActions>
+        // </Card>
+// >>>>>>> rebasing 10:05
       );
     }
   }

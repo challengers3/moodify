@@ -29,7 +29,6 @@ class Lyrics extends React.Component {
       }
     }
 
-
     return (
         <div>{this.props.watsonLyrics.map( 
           (lyrics, i) => {

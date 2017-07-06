@@ -8,8 +8,5 @@ Musixmatch https://developer.musixmatch.com/ <br />
 Spotify https://developer.spotify.com/web-api/ <br />
 IBM Watson Tone Analyzer https://www.ibm.com/watson/developercloud/tone-analyzer.html
 
-
 Technology Stack: MongoDB, ExpressJS, React, NodeJS <br>
-Team: Tony Cassara, Ryan Chow, Mel Hsieh, Yvonne Zhang
 
-Built at Hack Reactor 2017
